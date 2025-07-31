@@ -1,0 +1,55 @@
+version: "3.8"
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: celestiquerootsecret
+      MYSQL_DATABASE: celestique_db
+      MYSQL_USER: team4
+      MYSQL_PASSWORD: team4secret
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - app-network
+
+  backend:
+    build:
+      context: ./celestique-backend
+      dockerfile: DockerFile
+    container_name: laravel
+    depends_on:
+      - mysql
+    ports:
+      - "8000:80"
+    volumes:
+      - ./celestique-backend/storage:/var/www/storage
+      - ./celestique-backend/bootstrap/cache:/var/www/bootstrap/cache
+    environment:
+      DB_HOST: mysql
+      DB_DATABASE: celestique_db
+      DB_USERNAME: team4
+      DB_PASSWORD: team4secret
+    networks:
+      - app-network
+
+  frontend:
+    build:
+      context: ./celestique-frontend
+      dockerfile: DockerFile
+    container_name: react
+    depends_on:
+      - backend
+    ports:
+      - "3000:80"
+    networks:
+      - app-network
+
+volumes:
+  mysql-data:
+
+networks:
+  app-network:
+    driver: bridge
