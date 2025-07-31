@@ -17,7 +17,7 @@ services:
 
   backend:
     build:
-      context: ./celestique-backend
+      context: ./backend
       dockerfile: DockerFile
     container_name: laravel
     depends_on:
@@ -25,8 +25,8 @@ services:
     ports:
       - "8000:80"
     volumes:
-      - ./celestique-backend/storage:/var/www/storage
-      - ./celestique-backend/bootstrap/cache:/var/www/bootstrap/cache
+      - ./backend/storage:/var/www/storage
+      - ./backend/bootstrap/cache:/var/www/bootstrap/cache
     environment:
       DB_HOST: mysql
       DB_DATABASE: celestique_db
@@ -37,7 +37,7 @@ services:
 
   frontend:
     build:
-      context: ./celestique-frontend
+      context: ./frontend
       dockerfile: DockerFile
     container_name: react
     depends_on:
