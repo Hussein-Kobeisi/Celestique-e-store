@@ -5,10 +5,30 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 
+//Audit_logs -> logs of admin changing order status
+//Products    -> diaplay products, only added by admin
+
+// Orders  -> ceated by user on Checkout
+// Order_items -> created with order
+
+//Notifications -> created by user and admin actions, no direct api for it (triggered by other apis)
+//Daily_Revenues -> triggered by order payment
+// Hourly_Orders   -> triggered by order payment
+
 Route::group(['middleware' => 'auth:api'], function(){
     
     Route::group(['middleware' => 'isAdmin'], function(){
-        
+        Route::controller(AuditLogController::class)->group(function () {
+            Route::post('/add_log', 'addOrUpdate');
+        });
+
+        Route::controller(ProductController::class)->group(function () {
+            Route::post('/add_product', 'addOrUpdate');
+        });
+
+        Route::controller(OrderController::class)->group(function () {
+            Route::get('/orders', 'all');
+        });
     });
 
     Route::controller(AuthController::class)->group(function () {
@@ -17,11 +37,13 @@ Route::group(['middleware' => 'auth:api'], function(){
     });
 
     Route::controller(UserController::class)->group(function () {
-        // Route::get('/users/{id?}',           'findById');
         Route::post('/add_update_user',     'addOrUpdate');
         Route::post('/delete_user',         'delete');
     });
 
+    Route::controller(OrderController::class)->group(function () {
+        Route::post('/add_order', 'addOrUpdate');
+    });
 
 });
 
@@ -31,9 +53,7 @@ Route::group(['prefix' => ''], function(){
         Route::post('register', 'register');
     });
 
-    Route::controller(UserController::class)->group(function () {
-        Route::get('/users',                 'getPublicData');
+    Route::controller(ProductController::class)->group(function () {
+            Route::get('/products', 'all');
     });
-
-
 });
