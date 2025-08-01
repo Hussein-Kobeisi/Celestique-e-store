@@ -70,3 +70,4 @@ Route::group(['prefix' => ''], function(){
         Route::get('/products', 'all');
     });
 });
+
