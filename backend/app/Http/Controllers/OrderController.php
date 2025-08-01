@@ -2,21 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    static function all(Request $request)
+    public function all(Request $request)
     {
         // return all orders
+        $all = Order::all();
+        return $this->responseJson($all, "success", 200);
     }
 
-    static function getByUser(Request $request)
+    public function getByUser(Request $request)
     {
         // return orders by user
     }
 
-    static function add(Request $request)
+    public function add(Request $request)
     {
         // create order
         // create order items

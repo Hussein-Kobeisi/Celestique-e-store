@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->integer('user_id');
             $table->text('message');
             $table->string('type');
             $table->boolean('is_read')->default(false);

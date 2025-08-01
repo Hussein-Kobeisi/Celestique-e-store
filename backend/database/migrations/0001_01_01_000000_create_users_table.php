@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('mobile');
             $table->tinyInteger('role')->default(0);
             $table->integer('total_orders')->default(0);
             $table->integer('total_money_spent')->default(0);
