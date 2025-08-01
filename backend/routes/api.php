@@ -2,8 +2,13 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Common\AuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\DailyRevenueController;
+use App\Http\Controllers\HourlyOrderController;
 
 //Audit_logs -> logs of admin changing order status
 //Products    -> diaplay products, only added by admin

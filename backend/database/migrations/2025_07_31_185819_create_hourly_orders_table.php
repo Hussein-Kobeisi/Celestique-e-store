@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('hourly_orders', function (Blueprint $table) {
             $table->id();
+            $table->dateTime('hour');
+            $table->integer('order_count')->default(0);
             $table->timestamps();
         });
     }

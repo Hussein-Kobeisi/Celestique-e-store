@@ -9,4 +9,9 @@ class Daily_revenue extends Model
 {
     /** @use HasFactory<\Database\Factories\DailyRevenueFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'date',
+        'revenue'
+    ];
 }
