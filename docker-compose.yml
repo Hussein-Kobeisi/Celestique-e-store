@@ -25,6 +25,7 @@ services:
     ports:
       - "8000:80"
     volumes:
+      - ./backend:/var/www 
       - ./backend/storage:/var/www/storage
       - ./backend/bootstrap/cache:/var/www/bootstrap/cache
     environment:

@@ -27,7 +27,15 @@ Route::group(['middleware' => 'auth:api'], function(){
         });
 
         Route::controller(OrderController::class)->group(function () {
-            Route::get('/orders', 'all');
+            Route::get('/orders_all', 'all');
+        });
+
+        Route::controller(RevenueController::class)->group(function () {
+            Route::get('/revenue_today', 'getToday');
+        });
+
+        Route::controller(HourlyOrderController::class)->group(function () {
+            Route::get('/hourly_orders_today', 'getToday');
         });
     });
 
@@ -43,6 +51,11 @@ Route::group(['middleware' => 'auth:api'], function(){
 
     Route::controller(OrderController::class)->group(function () {
         Route::post('/add_order', 'addOrUpdate');
+        Route::get('/orders_user', 'getByUser');
+    });
+
+    Route::controller(NotificationController::class)->group(function () {
+        Route::get('/notifications_user', 'getByUser');
     });
 
 });
@@ -54,6 +67,6 @@ Route::group(['prefix' => ''], function(){
     });
 
     Route::controller(ProductController::class)->group(function () {
-            Route::get('/products', 'all');
+        Route::get('/products', 'all');
     });
 });
