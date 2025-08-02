@@ -47,11 +47,16 @@ class OrderController extends Controller
     }
 
 
-    public function add(Request $request)
+    public function add(AddOrderRequest $request)
     {
+        $request = $request->validated();
+
+        $order = OrderService::addOrder($request);
+        $orderItems = OrderItemService::addItems($request['order_items']);
+        $notification = NotificationService::createCheckoutNotification($order);
+        
+
         // TODO: Implement full order creation with:
-        // - order items
-        // - notifications (SMS)
         // - daily/hourly metrics update
         // - audit log
         // - stock update

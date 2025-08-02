@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
+use App\Services\OrderItemService;
 
 class OrderService
 {
@@ -33,6 +34,13 @@ class OrderService
         $order->status = $status;
         $order->save();
 
+        return $order;
+    }
+
+    public static function addOrder($data)
+    {
+        $order = (new Order)->fill($data);
+        $order->save();
         return $order;
     }
 }

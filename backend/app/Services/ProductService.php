@@ -13,8 +13,7 @@ class ProductService
 
     static function add($data)
     {
-        $product = new Product();
-        $product->fill($data);
+        $product = (new Product)->fill($data);
         return $product->save();
     }
 

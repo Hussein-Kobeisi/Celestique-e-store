@@ -10,15 +10,15 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\DailyRevenueController;
 use App\Http\Controllers\HourlyOrderController;
 
-//Audit_logs -> logs of admin changing order status
+//AuditLog -> logs of admin changing order status
 //Products    -> diaplay products, only added by admin
 
 // Orders  -> ceated by user on Checkout
 // Order_items -> created with order
 
 //Notifications -> created by user and admin actions, no direct api for it (triggered by other apis)
-//Daily_Revenues -> triggered by order payment
-// Hourly_Orders   -> triggered by order payment
+//DailyRevenue -> triggered by order payment
+// HourlyOrder   -> triggered by order payment
 
 Route::group(['middleware' => 'auth:api'], function(){
     
