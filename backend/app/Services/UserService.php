@@ -17,7 +17,6 @@ class UserService
     }
 
     static function fillUser($user, $data){
-        $data = $data->all();
         $data = array_filter($data, fn($value) => $value !== null && $value !== '');
         $user->fill($data);
         return $user;

@@ -5,11 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Services\UserService;
+use App\Http\Requests\UpdateUserRequest;
 
 class UserController extends Controller
 {
-    public function update(Request $request)
+    public function update(UpdateUserRequest $request)
     {
+        $request = $request->validated();
+        
         $user = UserService::getUser();
         if(!$user)
             return $this->responseJSON(null, "Unauthorized", 401);
