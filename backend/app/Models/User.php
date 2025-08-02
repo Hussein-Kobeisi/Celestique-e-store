@@ -35,8 +35,6 @@ class User extends Authenticatable implements JWTSubject
         'password',
         'mobile',
         'role',
-        'total_orders',
-        'total_spent_money',
     ];
 
     public function orders()
@@ -74,5 +72,13 @@ class User extends Authenticatable implements JWTSubject
         return [
             'password' => 'hashed',
         ];
+    }
+
+    public function getJWTIdentifier(){
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims(){
+        return [];
     }
 }
