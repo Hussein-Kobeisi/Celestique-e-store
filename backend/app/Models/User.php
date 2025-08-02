@@ -13,6 +13,17 @@ class User extends Authenticatable implements JWTSubject
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
+
+    public function getJWTIdentifier()
+    {
+        return $this->getKey(); // usually the user's id
+    }
+
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
+
     /**
      * The attributes that are mass assignable.
      *
@@ -49,7 +60,6 @@ class User extends Authenticatable implements JWTSubject
      */
     protected $hidden = [
         'password',
-        'remember_token',
     ];
 
     /**
@@ -60,7 +70,6 @@ class User extends Authenticatable implements JWTSubject
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
     }

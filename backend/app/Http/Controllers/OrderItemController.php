@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class OrderItemController extends Controller
 {
-    static function addOrUpdate(Request $request)
+    public function addOrUpdate(Request $request)
     {
         // Create or update order item    
     }

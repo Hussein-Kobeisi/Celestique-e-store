@@ -7,6 +7,7 @@ use App\Services\OrderService;
 
 class OrderController extends Controller
 {
+
     protected OrderService $orderService;
 
     public function __construct(OrderService $orderService)
@@ -44,6 +45,7 @@ class OrderController extends Controller
 
         return $this->responseJson($order, "Order updated successfully", 200);
     }
+
 
     public function add(Request $request)
     {
