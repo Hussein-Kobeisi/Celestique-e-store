@@ -6,13 +6,13 @@ use Illuminate\Http\Request;
 
 class NotificationController extends Controller
 {
-    static function getByUser(Request $request)
+    public function getByUser(Request $request)
     {
         // return notifications by user
         // set all retrieved notifications as read
     }
 
-    static function add(Request $request)
+    public function add(Request $request)
     {
         // add new notification for user
         // send notification alert to user's notification listener

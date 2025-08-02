@@ -6,12 +6,12 @@ use Illuminate\Http\Request;
 
 class HourlyOrderController extends Controller
 {
-    static function getToday(Request $request)
+    public function getToday(Request $request)
     {
         // get today's hourly orders count (could use scopre for this)
     }
 
-    static function addOrUpdate(Request $request)
+    public function addOrUpdate(Request $request)
     {
         // called by OrderController to add or update hourly order count
         // notify admin analytics listener

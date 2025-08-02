@@ -3,16 +3,28 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Services\UserService;
 
 class UserController extends Controller
 {
-    static function addOrUpdate(Request $request)
+    public function update(Request $request)
     {
-        // Add or update user details
+        $user = UserService::getUser();
+        if(!$user)
+            return $this->responseJSON(null, "Unauthorized", 401);
+
+        $user = UserService::fillUser($user, $request);
+        UserService::saveUser($user);
+
+        return $this->responseJSON($user, "User updated successfully");
+        
     }
 
-    static function delete(Request $request)
+    public function delete()
     {
-        // Delete user
+        $user = UserService::getUser();
+        UserService::deleteUser($user);
+        return $this->responseJSON(null, "User deleted successfully");
     }
 }

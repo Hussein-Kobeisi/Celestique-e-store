@@ -51,7 +51,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     });
 
     Route::controller(UserController::class)->group(function () {
-        Route::post('/add_update_user',     'addOrUpdate');
+        Route::post('/update_user',         'update');
         Route::post('/delete_user',         'delete');
     });
 

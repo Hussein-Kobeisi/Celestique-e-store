@@ -34,9 +34,6 @@ class User extends Authenticatable implements JWTSubject
         'name',
         'password',
         'mobile',
-        'role',
-        'total_orders',
-        'total_spent_money',
     ];
 
     public function orders()

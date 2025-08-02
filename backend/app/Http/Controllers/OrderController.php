@@ -6,17 +6,17 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    static function all(Request $request)
+    public function all(Request $request)
     {
         // return all orders
     }
 
-    static function getByUser(Request $request)
+    public function getByUser(Request $request)
     {
         // return orders by user
     }
 
-    static function add(Request $request)
+    public function add(Request $request)
     {
         // create order
         // create order items
@@ -29,7 +29,7 @@ class OrderController extends Controller
     }
     
 
-    static function update(Request $request)
+    public function update(Request $request)
     {
         // update order (used only for status update by admin)
     }
