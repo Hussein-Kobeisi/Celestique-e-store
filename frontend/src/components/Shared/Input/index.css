@@ -1,0 +1,36 @@
+.auth-input-field label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #333;
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.auth-input-field input {
+    width: 100%;
+    padding: 1rem 1.5rem;
+    border: 2px solid #E5E7EB;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+    background: #F9FAFB;
+}
+
+.auth-input-field input:focus {
+    outline: none;
+    border-color: #4338CA;
+    background: white;
+}
+
+.auth-input-field input::placeholder {
+    color: #9CA3AF;
+}
+
+
+@media (max-width: 480px) {
+
+    .auth-input-field input {
+        padding: 0.875rem 1rem;
+    }
+
+}
