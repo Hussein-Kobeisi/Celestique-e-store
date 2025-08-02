@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import Input from "../Shared/Input";
 import { useRegisterFormLogic } from './logic';
 import gold from "../../assets/Goldenrings.png"; 
-import Navbar from "../Shared/navbar";
+import Navbar from "../Shared/Usernavbar";
 
 const RegisterForm = ({ toggle }) => {
   const {

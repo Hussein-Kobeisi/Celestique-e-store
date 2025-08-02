@@ -2,7 +2,7 @@ import { Diamond, Bell, User } from "lucide-react";
 import { useState } from "react";
 import './index.css';
 
-const CelestiqueHeader = ({ activeLink }) => {
+const Navbar = ({ activeLink }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const toggleMobileMenu = () => {
@@ -85,4 +85,4 @@ const CelestiqueHeader = ({ activeLink }) => {
   );
 };
 
-export default CelestiqueHeader;
+export default Navbar;

@@ -1,0 +1,197 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=GFS+Didot&family=Inter:wght@300;400;500;600&display=swap');
+
+.celestique-header {
+    background-color: #DCCDBE;
+    padding: 0.75rem 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+.celestique-header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 80rem;
+    margin: 0 auto;
+}
+
+.celestique-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+}
+
+.celestique-logo-icon {
+    width: 1.75rem;
+    height: 1.75rem;
+    color: white;
+    fill: white;
+}
+
+.celestique-logo-text {
+    font-family: 'GFS Didot', serif;
+    font-size: 2.5rem;
+    font-weight: 500;
+    color: white;
+    letter-spacing: 0.075em;
+    margin: 0;
+}
+
+.celestique-nav {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.celestique-nav-link {
+    font-family: 'Inter', sans-serif;
+    color: white;
+    font-weight: 1100;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+    cursor: pointer;
+}
+
+.celestique-nav-link:hover {
+    opacity: 0.8;
+}
+
+.celestique-nav-link.active {
+    font-weight: 500;
+}
+
+.celestique-user-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.celestique-icon-btn {
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.9);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.celestique-icon-btn:hover {
+    background-color: rgba(255, 255, 255, 1);
+}
+
+.celestique-icon-btn svg {
+    width: 1rem;
+    height: 1rem;
+    color: #4b5563;
+}
+
+.celestique-mobile-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.25rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 0.5rem;
+}
+
+.celestique-mobile-toggle-line {
+    width: 1.25rem;
+    height: 0.125rem;
+    background-color: white;
+    border-radius: 0.125rem;
+}
+
+
+.celestique-mobile-nav {
+    margin-top: 1rem;
+    padding-bottom: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    display: none;
+}
+
+.celestique-mobile-nav.active {
+    display: block;
+}
+
+.celestique-mobile-nav-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding-top: 1rem;
+}
+
+.celestique-mobile-nav-link {
+    font-family: 'Inter', sans-serif;
+    color: white;
+    font-weight: 400;
+    font-size: 1rem;
+    text-decoration: none;
+    padding: 0.25rem 0.5rem;
+    transition: opacity 0.2s ease;
+    cursor: pointer;
+}
+
+.celestique-mobile-nav-link:hover {
+    opacity: 0.8;
+}
+
+.celestique-mobile-nav-link.active {
+    font-weight: 500;
+}
+
+
+@media (max-width: 768px) {
+    .celestique-nav {
+        display: none;
+    }
+    
+    .celestique-mobile-toggle {
+        display: flex;
+    }
+}
+
+@media (max-width: 480px) {
+    .celestique-header {
+        padding: 0.75rem;
+    }
+    
+    .celestique-logo-text {
+        font-size: 1.125rem;
+    }
+    
+    .celestique-logo-icon {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+    
+    .celestique-icon-btn {
+        width: 2rem;
+        height: 2rem;
+    }
+    
+    .celestique-icon-btn svg {
+        width: 0.875rem;
+        height: 0.875rem;
+    }
+}
+
+@media (min-width: 1440px) {
+    .celestique-header-content {
+        max-width: 100rem;
+        padding: 0 3rem;
+    }
+    
+    .celestique-nav {
+        gap: 2.5rem;
+    }
+}

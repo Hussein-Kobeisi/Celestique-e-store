@@ -1,5 +1,5 @@
 import "./index.css";
-import Navbar from "../../components/Shared/navbar";
+import Navbar from "../../components/Shared/Usernavbar";
 import { useProfileLogic } from './logic';
 import { useNavigate } from 'react-router-dom';
 
