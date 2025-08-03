@@ -1,51 +1,99 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import "./index.css";
 import goldenRingImage from "../../assets/Goldenrings.png";
-const products = new Array(8).fill({
+import ProductCard from "../../components/ProductCard";
+
+const dummyProducts = new Array(8).fill({
   name: "HEXA GOLD RING",
   description: "18k yellow gold",
   price: "$450",
-  image: goldenRingImage,// Replace with real
+  image: goldenRingImage,
 });
 
 const Products = () => {
+  const [products, setProducts] = useState(dummyProducts);
+  const [search, setSearch] = useState("");
+  const [category, setCategory] = useState("");
+  const [sort, setSort] = useState("");
+  const [error, setError] = useState(null);
+
+  // here fetching the products if there  is a filters or not . if there is a filter this request will be sent another time after the first request 
+  const fetchProducts = async (filters = {}) => {
+    try {
+      const response = await axios.post("http://localhost:8000/api/products", filters);
+      const data = response.data;
+
+      if (data && Array.isArray(data) && data.length > 0) {
+        setProducts(data);
+      } else {
+        setProducts(dummyProducts);
+      }
+    } catch (err) {
+      console.error("Error fetching products:", err);
+      setProducts(dummyProducts);
+      setError("Could not load products. Showing sample items.");
+    }
+  };
+
+  //this is initial fetch , no filters here . 
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  const handleFilter = () => {
+    const filters = {
+      search: search.trim(),
+      category,
+      sort,
+    };
+    fetchProducts(filters);
+  };
+
   return (
     <div className="products-page">
       <div className="filters">
-      <div className="filters-left">
-  <div className="select-wrapper">
-    <select>
-      <option>Sort by</option>
-    </select>
-  </div>
-  <div className="select-wrapper">
-    <select>
-      <option>Category</option>
-    </select>
-  </div>
-</div>
-<div className="search-bar-container">
-<input
-    type="text"
-    placeholder="Search..."
-    className="search-input"
-  />
-  </div>
+        <div className="filters-left">
+          <div className="select-wrapper">
+            <select value={sort} onChange={(e) => setSort(e.target.value)}>
+              <option value="">Sort by</option>
+              <option value="price_asc">Price: Low to High</option>
+              <option value="price_desc">Price: High to Low</option>
+              <option value="name_asc">Name: A-Z</option>
+            </select>
+          </div>
 
-  <button className="filter-btn">Filter</button>
-</div>
+          <div className="select-wrapper">
+            <select value={category} onChange={(e) => setCategory(e.target.value)}>
+              <option value="">Category</option>
+              <option value="Rings">Rings</option>
+              <option value="Necklaces">Necklaces</option>
+              <option value="Bracelets">Bracelets</option>
+            </select>
+          </div>
+        </div>
+
+        <div className="search-bar-container">
+          <input
+            type="text"
+            placeholder="Search..."
+            className="search-input"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
+
+        <button className="filter-btn" onClick={handleFilter}>
+          Filter
+        </button>
+      </div>
+
+      {error && <div className="error-message">{error}</div>}
 
       <div className="product-grid">
-        {products.map((product, idx) => (
-          <div className="product-card" key={idx}>
-            <img src={product.image} alt={product.name} />
-            <div className="product-info">
-              <h3>{product.name}</h3>
-              <p>{product.description}</p>
-              <strong>{product.price}</strong>
-            </div>
-          </div>
-        ))}
+      {products.map((product, id) => (
+  <ProductCard key={id} product={product} />
+))}
       </div>
     </div>
   );
