@@ -13,8 +13,7 @@ class ProductService
 
     static function add($data)
     {
-        $product = new Product();
-        $product->fill($data);
+        $product = (new Product)->fill($data);
         return $product->save();
     }
 
@@ -32,5 +31,15 @@ class ProductService
     static function all()
     {
         return Product::all();
+    }
+
+    static function tryDecreaseStock($productId, $quantity)
+    {
+        $product = Product::find($productId);
+        if ($product && $product->stock >= $quantity) {
+            $product->stock -= $quantity;
+            return $product->save();
+        }
+        return false;
     }
 }

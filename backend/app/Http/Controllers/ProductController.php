@@ -27,6 +27,7 @@ class ProductController extends Controller
         
         return response()->json($product, 200);
         
+        // TODO:
         //notify listing page listener that product was updated
     }
 

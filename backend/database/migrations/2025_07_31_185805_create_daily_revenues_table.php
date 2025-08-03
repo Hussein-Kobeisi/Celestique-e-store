@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('daily_revenues', function (Blueprint $table) {
             $table->id();
-            $table->date('date');
+            $table->date('date_time')->unique();
             $table->decimal('revenue', 10, 2);
             $table->timestamps();
         });

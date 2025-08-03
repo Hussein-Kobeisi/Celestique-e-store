@@ -29,6 +29,6 @@ class Order extends Model
 
     public function auditLogs()
     {
-        return $this->hasMany(Audit_log::class);
+        return $this->hasMany(AuditLog::class);
     }
 }
