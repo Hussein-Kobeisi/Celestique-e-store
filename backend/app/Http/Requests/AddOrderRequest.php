@@ -14,9 +14,7 @@ class AddOrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => 'required|integer|exists:users,id',
             'total_amount' => 'required|numeric|min:0',
-            'status'    => 'required|in:pending,paid,packed,shipped',
             'order_items' => 'required|array|min:1',
                 'order_items.*.product_id' => 'required|integer|exists:products,id',
                 'order_items.*.quantity' => 'required|integer|min:1',

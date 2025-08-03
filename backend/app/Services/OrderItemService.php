@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\OrderItem;
 use Illuminate\Support\Facades\Auth;
+use App\Services\ProductService;
 
 class OrderItemService
 {
@@ -17,7 +18,10 @@ class OrderItemService
     {
         $orderItems = [];
         foreach ($data['order_items'] as $item) {
-            $orderItems[] = OrderItemService::add($item);
+            $product_stock_decreased = ProductService::tryDecreaseStock($item['product_id'], $item['quantity']);
+            if($product_stock_decreased)
+                //if not enough stock item is not added
+                $orderItems[] = OrderItemService::add($item);
         }
         return $orderItems;
     }

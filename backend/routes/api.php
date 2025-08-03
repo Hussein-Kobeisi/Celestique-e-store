@@ -26,7 +26,6 @@ Route::group(['middleware' => 'auth:api'], function(){
         Route::controller(ProductController::class)->group(function () {
             Route::post('/add_product', 'add');
             Route::post('/update_product', 'update');
-            Route::get('/products', 'all');
         });
 
         Route::controller(OrderController::class)->group(function () {
@@ -71,6 +70,9 @@ Route::group(['prefix' => ''], function(){
     Route::controller(AuthController::class)->group(function () {
         Route::post('login', 'login');
         Route::post('register', 'register');
+    });
+    Route::controller(ProductController::class)->group(function () {
+        Route::get('/products', 'all');
     });
 
 });

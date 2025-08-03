@@ -37,9 +37,12 @@ class OrderService
         return $order;
     }
 
-    public static function addOrder($data)
+    public static function addOrder($total_amount, $userId)
     {
-        $order = (new Order)->fill($data);
+        $order = new Order;
+        $order->total_amount = $total_amount;
+        $order->user_id = $userId;
+        $order->status = 'pending';
         $order->save();
         return $order;
     }

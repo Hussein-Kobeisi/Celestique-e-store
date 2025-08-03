@@ -49,19 +49,28 @@ class OrderController extends Controller
 
     public function add(AddOrderRequest $request)
     {
+        die("hello");
         $request = $request->validated();
+        $user = auth()->user();
 
-        $order = OrderService::addOrder($request);
+        $order = OrderService::addOrder($request['total_amount'], $user->id);
         $orderItems = OrderItemService::addItems($request['order_items']);
         $notification = NotificationService::createCheckoutNotification($order);
-        
+        $hourlyOrder = HourlyOrderService::addOrUpdateHourlyOrder(count($orderItems));
+        $dailyRevenue = DailyRevenueService::addOrUpdateDailyRevenue($order->total_amount);
+        $auditLog = AuditLogService::createOrderAuditLog($order);
 
-        // TODO: Implement full order creation with:
-        // - daily/hourly metrics update
-        // - audit log
-        // - stock update
-        // - admin broadcast
 
-        // Once implemented, delegate to $this->orderService->createOrder($request->all())
+        return $this->responseJson([
+            'order' => $order,
+            'order_items' => $orderItems,
+            'notification' => $notification,
+            'hourly_order' => $hourlyOrder,
+            'daily_revenue' => $dailyRevenue,
+            'audit_log' => $auditLog
+        ], "Order created successfully", 201);
+        // TODO: 
+        // - live add to admin dashboard
+        // - user sees live update of order status
     }
 }
