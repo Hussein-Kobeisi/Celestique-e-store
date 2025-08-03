@@ -3,14 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Services\NotificationService;
 
 class NotificationController extends Controller
 {
-    public function getByUser(Request $request)
+    public function getByUser()
     {
-        // TODO:
-        // return notifications by user
-        // set all retrieved notifications as read
+        $user = auth()->user();
+        $notifications = NotificationService::getByUser($user->id);
+        $reponseNotifications = NotificationService::mapNotificationsCopy($notifications);
+        NotificationService::markAsRead($notifications);
+        return $this->responseJSON($reponseNotifications, "success", 200);
     }
 
     public function add(Request $request)
