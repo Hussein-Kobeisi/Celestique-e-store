@@ -11,7 +11,7 @@ class DailyRevenue extends Model
     use HasFactory;
 
     protected $fillable = [
-        'date',
+        'date_time',
         'revenue'
     ];
 }
