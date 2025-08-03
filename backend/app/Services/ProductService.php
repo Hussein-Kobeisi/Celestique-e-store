@@ -7,17 +7,20 @@ use App\Models\Product;
 class ProductService
 {
 
-    static function get($id){
+    static function get($id)
+    {
         return Product::find($id);
     }
 
     static function add($data)
     {
         $product = (new Product)->fill($data);
-        return $product->save();
+        $product->save();
+        return $product;
     }
 
-    static function fill($product, $data){
+    static function fill($product, $data)
+    {
         $data = array_filter($data, fn($value) => $value !== null && $value !== '');
         $product->fill($data);
         return $product;
@@ -41,5 +44,17 @@ class ProductService
             return $product->save();
         }
         return false;
+    }
+
+    static function productWithImage($validated)
+    {
+        $imagePath = ImageService::saveBase64File($validated['image_base64'], 'products');
+
+        // Merge into product data
+        $productData = array_merge($validated, [
+            'image_url' => $imagePath,
+        ]);
+        unset($productData['image_base64']); // remove base64 from the data before saving
+        return  $productData; 
     }
 }

@@ -10,26 +10,21 @@ use App\Services\HourlyOrderService;
 use App\Services\DailyRevenueService;
 use App\Services\AuditLogService;
 use App\Http\Requests\AddOrderRequest;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
 
-    protected OrderService $orderService;
-
-    public function __construct(OrderService $orderService)
-    {
-        $this->orderService = $orderService;
-    }
 
     public function all()
     {
-        $orders = $this->orderService->getAllOrders();
+        $orders = OrderService::getAllOrders();
         return $this->responseJson($orders, "success", 200);
     }
 
     public function getByUser(Request $request)
     {
-        $orders = $this->orderService->getOrdersByAuthenticatedUser();
+        $orders = OrderService::getOrdersByAuthenticatedUser();
         return $this->responseJson($orders, "success", 200);
     }
 
@@ -40,7 +35,7 @@ class OrderController extends Controller
             'status' => 'required|in:pending,paid,packed,shipped',
         ]);
 
-        $order = $this->orderService->updateOrderStatus(
+        $order = OrderService::updateOrderStatus(
             $request->order_id,
             $request->status
         );
@@ -56,7 +51,7 @@ class OrderController extends Controller
     public function add(AddOrderRequest $request)
     {
         $request = $request->validated();
-        $user = auth()->user();
+        $user = Auth::user();
 
         $order = OrderService::addOrder($request['total_amount'], $user->id);
         $orderItems = OrderItemService::addItems($request['order_items'], $order->id);

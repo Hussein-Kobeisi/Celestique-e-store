@@ -8,7 +8,7 @@ use App\Models\User;
 class UserService
 {
     static function getUser(){
-        return auth()->user();
+        return Auth::user();
     }
 
     static function getFillableData($request){
