@@ -69,10 +69,10 @@ class OrderController extends Controller
         return $this->responseJson([
             'order' => $order,
             'order_items' => $orderItems,
-            // 'notification' => $notification,
-            // 'hourly_order' => $hourlyOrder,
-            // 'daily_revenue' => $dailyRevenue,
-            // 'audit_log' => $auditLog
+            'notification' => $notification,
+            'hourly_order' => $hourlyOrder,
+            'daily_revenue' => $dailyRevenue,
+            'audit_log' => $auditLog
         ], "Order created successfully", 201);
 
         // TODO: 
