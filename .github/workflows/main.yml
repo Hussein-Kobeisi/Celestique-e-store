@@ -2,11 +2,9 @@ name: Laravel Feature Tests CI
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   pull_request:
-    branches:
-      - main
+    branches: [main]
 
 jobs:
   test:
@@ -45,19 +43,19 @@ jobs:
           extensions: mbstring, bcmath, xml, mysql, curl, zip
 
       - name: Install Composer dependencies
-        working-directory: ./backend
-        run: composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader
+        working-directory: ./server
+        run: composer install --no-progress --prefer-dist --optimize-autoloader
 
-      - name: Copy .env example and generate app key
-        working-directory: ./backend
+      - name: Copy .env and generate key
+        working-directory: ./server
         run: |
           cp .env.example .env
           php artisan key:generate
 
       - name: Run migrations
-        working-directory: ./backend
+        working-directory: ./server
         run: php artisan migrate --force
 
       - name: Run Laravel feature tests
-        working-directory: ./backend
+        working-directory: ./server
         run: php artisan test --testsuite=Feature
