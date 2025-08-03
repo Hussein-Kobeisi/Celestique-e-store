@@ -14,13 +14,14 @@ class OrderItemService
         return $orderItem;
     }
 
-    public static function addItems($items)
+    public static function addItems($items, $orderId)
     {
         $orderItems = [];
-        foreach ($data['order_items'] as $item) {
+        foreach ($items as $item) {
             $product_stock_decreased = ProductService::tryDecreaseStock($item['product_id'], $item['quantity']);
             if($product_stock_decreased)
                 //if not enough stock item is not added
+                $item['order_id'] = $orderId;
                 $orderItems[] = OrderItemService::add($item);
         }
         return $orderItems;

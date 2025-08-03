@@ -4,6 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\OrderService;
+use App\Services\OrderItemService;
+use App\Services\NotificationService;
+use App\Services\HourlyOrderService;
+use App\Services\DailyRevenueService;
+use App\Services\AuditLogService;
+use App\Http\Requests\AddOrderRequest;
 
 class OrderController extends Controller
 {
@@ -49,12 +55,11 @@ class OrderController extends Controller
 
     public function add(AddOrderRequest $request)
     {
-        die("hello");
         $request = $request->validated();
         $user = auth()->user();
 
         $order = OrderService::addOrder($request['total_amount'], $user->id);
-        $orderItems = OrderItemService::addItems($request['order_items']);
+        $orderItems = OrderItemService::addItems($request['order_items'], $order->id);
         $notification = NotificationService::createCheckoutNotification($order);
         $hourlyOrder = HourlyOrderService::addOrUpdateHourlyOrder(count($orderItems));
         $dailyRevenue = DailyRevenueService::addOrUpdateDailyRevenue($order->total_amount);
@@ -64,13 +69,16 @@ class OrderController extends Controller
         return $this->responseJson([
             'order' => $order,
             'order_items' => $orderItems,
-            'notification' => $notification,
-            'hourly_order' => $hourlyOrder,
-            'daily_revenue' => $dailyRevenue,
-            'audit_log' => $auditLog
+            // 'notification' => $notification,
+            // 'hourly_order' => $hourlyOrder,
+            // 'daily_revenue' => $dailyRevenue,
+            // 'audit_log' => $auditLog
         ], "Order created successfully", 201);
+
         // TODO: 
+        // - update user total_orders/total_spent
         // - live add to admin dashboard
         // - user sees live update of order status
+        // send email to user
     }
 }

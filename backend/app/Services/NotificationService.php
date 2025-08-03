@@ -10,9 +10,8 @@ class NotificationService
     public static function createCheckoutNotification($order){
         $notification = new Notification();
         $notification->user_id = $order->user_id;
-        $notification->order_id = $order->id;
         $notification->message = "Your order #{$order->id} has been placed successfully. For total amount: {$order->total_amount}$.";
-        $notification->status = 'unread';
+        $notification->is_read = false;
         $notification->type = 'SMS';
         $notification->save();
 
