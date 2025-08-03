@@ -1,5 +1,5 @@
-import "./index.css";
-import { Bell, User, Plus, Minus, ShoppingCart } from 'lucide-react';
+/* import "./index.css";
+import {Plus, Minus, ShoppingCart } from 'lucide-react';
 import { useViewProductLogic } from './logic';
 import { useNavigate, useParams } from 'react-router-dom';
 import Navbar from "../../components/Shared/Usernavbar";
@@ -124,4 +124,4 @@ const ViewProduct = () => {
   );
 };
 
-export default ViewProduct;
+export default ViewProduct; */

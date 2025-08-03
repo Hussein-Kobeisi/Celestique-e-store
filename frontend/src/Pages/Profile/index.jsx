@@ -127,12 +127,6 @@ const Profile = () => {
                   </button>
                 </div>
               </form>
-
-              <div className="pf-danger-section">
-                <div className="pf-danger-title">Account Termination</div>
-                <div className="pf-danger-description">
-                  Permanently delete your account and all associated data. This action is irreversible and will terminate your order history and saved preferences.
-                </div>
                 <button 
                   type="button" 
                   className="pf-btn-danger"
@@ -140,7 +134,6 @@ const Profile = () => {
                 >
                   Delete Account Permanently
                 </button>
-              </div>
             </div>
           </div>
         </div>
