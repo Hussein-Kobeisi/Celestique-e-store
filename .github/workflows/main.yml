@@ -61,4 +61,5 @@ jobs:
 
       - name: Run Laravel feature tests
         working-directory: ./backend
-        run: php artisan test --testsuite=Feature
+        run: ./vendor/bin/phpunit --testsuite=Feature --no-interaction
+
