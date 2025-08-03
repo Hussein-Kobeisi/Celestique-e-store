@@ -3,22 +3,23 @@
 namespace App\Services;
 
 use App\Models\DailyRevenue;
+use carbon\Carbon;
 
 class DailyRevenueService
 {
     public static function getTodayRevenue(): DailyRevenue
     {
-        $today = now()->format('Y-m-d');
-        $dailyRevenue = DailyRevenue::firstOrCreate(['date' => $today], ['total' => 0]);
+        $today = Carbon::now()->startofDay();
+        $dailyRevenue = DailyRevenue::firstOrCreate(['date_time' => $today], ['revenue' => 0]);
 
         return $dailyRevenue;
     }
     public static function addOrUpdateDailyRevenue(float $amount): DailyRevenue
     {
-        $today = now()->format('Y-m-d');
-        $dailyRevenue = DailyRevenue::firstOrCreate(['date' => $today],['total' => 0]);
+        $today = Carbon::now()->startofDay();
+        $dailyRevenue = DailyRevenue::firstOrCreate(['date_time' => $today],['revenue' => 0]);
 
-        $dailyRevenue->increment('total', $amount);
+        $dailyRevenue->increment('revenue', $amount);
         $dailyRevenue->refresh();
 
         return $dailyRevenue;

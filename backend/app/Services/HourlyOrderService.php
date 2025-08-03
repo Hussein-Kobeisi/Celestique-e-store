@@ -3,13 +3,16 @@
 namespace App\Services;
 
 use App\Models\HourlyOrder;
+use Carbon\Carbon;
+
 
 class HourlyOrderService
 {
     public static function getTodayHourlyOrders()
     {
-        $today = now()->format('Y-m-d');
-        $todayOrders = HourlyOrder::where(['date_time' >= $today . ' 00:00:00'])
+        $startOfDay = Carbon::now()->startOfDay();
+        $endOfDay = Carbon::now()->endOfDay();
+        $todayOrders = HourlyOrder::whereBetween('date_time', [$startOfDay, $endOfDay])
                                     ->orderBy('date_time', 'asc')
                                     ->get();
         return $todayOrders;
@@ -17,8 +20,8 @@ class HourlyOrderService
 
     public static function addOrUpdateHourlyOrder(int $amount)
     {
-        $hourlyOrder = HourlyOrder::where('created_at', '>=', now()->subHour())
-                                    ->first();
+        $dateTime = Carbon::now()->startOfHour();
+        $hourlyOrder = HourlyOrder::firstOrCreate(['date_time' => $dateTime], ['order_count' => 0]);
 
         if ($hourlyOrder)
             $hourlyOrder->increment('order_count', $amount);
