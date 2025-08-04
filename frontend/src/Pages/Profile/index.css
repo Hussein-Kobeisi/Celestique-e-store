@@ -1,0 +1,381 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #ffffff;
+    color: #333;
+    line-height: 1.6;
+}
+
+.pf-header {
+    background: #DCCDBE;
+    padding: 1.5rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.pf-header-content {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pf-logo {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #332D29;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+}
+
+.pf-logo::before {
+    content: "💎";
+    font-size: 1.6rem;
+}
+
+.pf-nav-links {
+    display: flex;
+    gap: 3rem;
+    align-items: center;
+}
+
+.pf-nav-link {
+    color: #332D29;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+    font-size: 1.2rem;
+}
+
+.pf-nav-link:hover {
+    color: #C39706;
+}
+
+.pf-nav-link.pf-active {
+    color: #C39706;
+    font-weight: 600;
+}
+
+.pf-user-avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: #332D29;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.pf-main-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 3rem;
+    display: grid;
+    grid-template-columns: 400px 1fr;
+    gap: 3rem;
+    min-height: calc(100vh - 120px);
+}
+
+.pf-profile-sidebar {
+    background: #DCCDBE;
+    border-radius: 20px;
+    height: fit-content;
+    overflow: hidden;
+    padding: 2rem;
+    text-align: center;
+}
+
+.pf-profile-header {
+    margin-bottom: 2rem;
+}
+
+.pf-profile-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: #C39706;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    margin: 0 auto 1rem;
+    color: white;
+    font-weight: bold;
+}
+
+.pf-profile-name {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #332D29;
+}
+
+.pf-profile-subtitle {
+    font-size: 1rem;
+    color: #332D29;
+    margin-bottom: 1.5rem;
+}
+
+.pf-profile-stats {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+}
+
+.pf-stat-item {
+    text-align: center;
+}
+
+.pf-stat-number {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #332D29;
+    display: block;
+}
+
+.pf-stat-label {
+    font-size: 0.9rem;
+    color: #C39706;
+    font-weight: 500;
+}
+
+.pf-profile-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.pf-content-card {
+    background: #DCCDBE;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.pf-card-header {
+    padding: 2rem 2rem 1rem;
+}
+
+.pf-card-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #332D29;
+    margin-bottom: 0.5rem;
+}
+
+.pf-card-subtitle {
+    font-size: 0.9rem;
+    color: #332D29;
+    opacity: 0.7;
+}
+
+.pf-card-content {
+    padding: 0 2rem 2rem;
+}
+
+.pf-form-group {
+    margin-bottom: 1.5rem;
+}
+
+.pf-form-input {
+    width: 100%;
+    padding: 1rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    background: white;
+    color: #332D29;
+    transition: all 0.3s;
+}
+
+.pf-form-input:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(195, 151, 6, 0.3);
+}
+
+.pf-form-input::placeholder {
+    color: #999;
+}
+
+.pf-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.pf-form-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    margin-top: 2rem;
+}
+
+.pf-btn {
+    padding: 0.8rem 2rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: all 0.3s;
+}
+
+.pf-btn-cancel {
+    background: transparent;
+    color: #332D29;
+    border: 1px solid #332D29;
+}
+
+.pf-btn-cancel:hover {
+    background: #332D29;
+    color: white;
+}
+
+.pf-btn-save {
+    background: #332D29;
+    color: white;
+}
+
+.pf-btn-save:hover {
+    background: #4a453f;
+}
+
+.pf-danger-section {
+    background: #FF6666;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-top: 2rem;
+}
+
+.pf-danger-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 0.5rem;
+}
+
+.pf-danger-description {
+    font-size: 0.9rem;
+    color: white;
+    margin-bottom: 1rem;
+    line-height: 1.4;
+}
+
+.pf-btn-danger {
+    background: #FF1111;
+    color: white;
+    border: none;
+    padding: 0.7rem 1.5rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.pf-btn-danger:hover {
+    background: #e00000;
+}
+
+.pf-success-message {
+    background: #C39706;
+    color: white;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+}
+
+.pf-error-message {
+    background: #FF6666;
+    color: white;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+}
+
+@media (max-width: 1024px) {
+    .pf-main-content {
+        grid-template-columns: 1fr;
+        padding: 1.5rem;
+        gap: 2rem;
+    }
+
+    .pf-header-content {
+        padding: 0 1.5rem;
+    }
+
+    .pf-nav-links {
+        display: none;
+    }
+
+    .pf-form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .pf-form-actions {
+        flex-direction: column;
+    }
+
+    .pf-btn {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .pf-header-content {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .pf-logo {
+        font-size: 1.4rem;
+    }
+
+    .pf-user-avatar {
+        width: 40px;
+        height: 40px;
+        font-size: 0.9rem;
+    }
+
+    .pf-profile-avatar {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
+
+    .pf-profile-name {
+        font-size: 1.3rem;
+    }
+
+    .pf-card-content {
+        padding: 0 1.5rem 1.5rem;
+    }
+
+    .pf-card-header {
+        padding: 1.5rem 1.5rem 1rem;
+    }
+
+    .pf-form-input {
+        padding: 0.8rem;
+        font-size: 0.9rem;
+    }
+
+    .pf-btn {
+        padding: 0.7rem 1.5rem;
+        font-size: 0.9rem;
+    }
+}
