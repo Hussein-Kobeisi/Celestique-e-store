@@ -1,0 +1,22 @@
+.notification-row {
+    border-bottom: 1px solid #eee;
+    align-items: center;
+  }
+  
+  .notification-row.unread {
+    background-color: #fde5c3;
+  }
+  
+  .notification-status.read {
+    background-color: #ccc;
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+  }
+  
+  .notification-status.unread {
+    background-color: goldenrod;
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+  }
