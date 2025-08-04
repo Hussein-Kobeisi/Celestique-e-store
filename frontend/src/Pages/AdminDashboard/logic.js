@@ -11,7 +11,6 @@ export const useProductsListingLogic = () => {
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
 
-  // Mock data for demonstration - replace with real API calls
   const mockOrders = [
     { id: 10, user: 'John Doe', total: 100, status: 'pending' },
     { id: 15, user: 'John Doe', total: 100, status: 'pending' },
@@ -25,7 +24,6 @@ export const useProductsListingLogic = () => {
     revenueGrowth: 25,
   };
 
-  // Fetch orders and analytics data
   const fetchData = useCallback(async () => {
     setIsLoading(true);
     setError(null);
@@ -35,14 +33,12 @@ export const useProductsListingLogic = () => {
       const userId = localStorage.getItem('userId');
 
       if (!token || !userId) {
-        // For demo purposes, use mock data
         setOrders(mockOrders);
         setAnalytics(mockAnalytics);
         setIsLoading(false);
         return;
       }
 
-      // Fetch orders
       try {
         const ordersResponse = await axios.get(
           'http://localhost:8000/api/v0.1/orders/admin/all',
@@ -56,15 +52,13 @@ export const useProductsListingLogic = () => {
         if (ordersResponse.data.success) {
           setOrders(ordersResponse.data.payload || []);
         } else {
-          // Fallback to mock data
           setOrders(mockOrders);
         }
       } catch (ordersError) {
         console.warn('Orders API not available, using mock data:', ordersError);
         setOrders(mockOrders);
       }
-
-      // Fetch analytics
+      
       try {
         const analyticsResponse = await axios.get(
           'http://localhost:8000/api/v0.1/analytics/dashboard',
@@ -78,7 +72,7 @@ export const useProductsListingLogic = () => {
         if (analyticsResponse.data.success) {
           setAnalytics(analyticsResponse.data.payload);
         } else {
-          // Fallback to mock data
+
           setAnalytics(mockAnalytics);
         }
       } catch (analyticsError) {
@@ -88,8 +82,7 @@ export const useProductsListingLogic = () => {
 
     } catch (err) {
       console.error('Error fetching data:', err);
-      
-      // Use mock data as fallback
+
       setOrders(mockOrders);
       setAnalytics(mockAnalytics);
       
@@ -97,7 +90,6 @@ export const useProductsListingLogic = () => {
         setError('Session expired. Please log in again.');
         navigate('/auth');
       } else {
-        // Don't show error for demo, just use mock data
         console.warn('Using mock data due to API unavailability');
       }
     } finally {
@@ -105,12 +97,10 @@ export const useProductsListingLogic = () => {
     }
   }, [navigate]);
 
-  // Initial data fetch
   useEffect(() => {
     fetchData();
   }, [fetchData]);
 
-  // Handle status change for orders
   const handleStatusChange = useCallback(async (orderId, newStatus) => {
     setError(null);
     setSuccessMessage(null);
@@ -119,7 +109,6 @@ export const useProductsListingLogic = () => {
       const token = localStorage.getItem('token');
 
       if (!token) {
-        // For demo purposes, just update local state
         setOrders(prevOrders =>
           prevOrders.map(order =>
             order.id === orderId
@@ -131,7 +120,6 @@ export const useProductsListingLogic = () => {
         return;
       }
 
-      // Make API call to update status
       const response = await axios.patch(
         `http://localhost:8000/api/v0.1/orders/${orderId}/status`,
         { status: newStatus },
@@ -144,7 +132,6 @@ export const useProductsListingLogic = () => {
       );
 
       if (response.data.success) {
-        // Update local state
         setOrders(prevOrders =>
           prevOrders.map(order =>
             order.id === orderId
@@ -157,7 +144,6 @@ export const useProductsListingLogic = () => {
     } catch (err) {
       console.error('Error updating order status:', err);
       
-      // For demo purposes, still update local state
       setOrders(prevOrders =>
         prevOrders.map(order =>
           order.id === orderId
@@ -171,18 +157,15 @@ export const useProductsListingLogic = () => {
         setError('Session expired. Please log in again.');
         navigate('/auth');
       } else if (err.response?.data?.message) {
-        // Don't show API errors in demo mode
         console.warn('API error:', err.response.data.message);
       }
     }
   }, [navigate]);
 
-  // Refresh data function
   const refreshData = useCallback(() => {
     fetchData();
   }, [fetchData]);
 
-  // Clear messages after timeout
   useEffect(() => {
     if (error || successMessage) {
       const timer = setTimeout(() => {
@@ -194,7 +177,6 @@ export const useProductsListingLogic = () => {
     }
   }, [error, successMessage]);
 
-  // Calculate derived data
   const derivedAnalytics = {
     ...analytics,
     totalOrders: orders.length,

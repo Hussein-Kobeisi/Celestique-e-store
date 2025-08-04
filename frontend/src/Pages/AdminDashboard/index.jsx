@@ -23,10 +23,9 @@ const ProductsListing = () => {
     refreshData,
   } = useProductsListingLogic();
 
-  // Initialize Pie Chart
   useEffect(() => {
     if (pieChartRef.current && analytics) {
-      // Destroy existing chart
+ 
       if (pieChartInstance.current) {
         pieChartInstance.current.destroy();
       }
@@ -64,10 +63,9 @@ const ProductsListing = () => {
     };
   }, [analytics]);
 
-  // Initialize Line Chart
   useEffect(() => {
     if (lineChartRef.current && analytics) {
-      // Destroy existing chart
+ 
       if (lineChartInstance.current) {
         lineChartInstance.current.destroy();
       }
@@ -134,7 +132,6 @@ const ProductsListing = () => {
 
         <Navbar/>
 
-      {/* Main Content */}
       <main className="pl-main-content">
         {error && (
           <div className="pl-error">
@@ -148,9 +145,8 @@ const ProductsListing = () => {
           </div>
         )}
 
-        {/* Dashboard Grid */}
         <div className="pl-dashboard-grid">
-          {/* Revenue Card */}
+
           <div className="pl-revenue-card">
             <div className="pl-revenue-header">
               <div className="pl-revenue-info">
@@ -176,7 +172,6 @@ const ProductsListing = () => {
             </div>
           </div>
 
-          {/* Orders Chart Card */}
           <div className="pl-orders-card">
             <div className="pl-orders-header">
               <div className="pl-orders-title">Orders</div>
@@ -188,7 +183,6 @@ const ProductsListing = () => {
           </div>
         </div>
 
-        {/* Orders Table */}
         <div className="pl-orders-table-container">
           {isLoading ? (
             <div className="pl-loading">Loading orders...</div>
