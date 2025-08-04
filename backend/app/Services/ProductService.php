@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Models\Product;
+use App\Http\Requests\ProductFilterRequest;
+use App\QueryBuilders\ProductQueryBuilder;
 
 class ProductService
 {
@@ -34,6 +36,11 @@ class ProductService
     static function all()
     {
         return Product::all();
+    }
+
+    static function getFilteredProducts(ProductFilterRequest $request)
+    {
+        return ProductQueryBuilder::build($request)->paginate(15);
     }
 
     static function tryDecreaseStock($productId, $quantity)

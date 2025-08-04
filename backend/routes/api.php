@@ -20,9 +20,9 @@ use App\Http\Controllers\HourlyOrderController;
 //DailyRevenue -> triggered by order payment
 // HourlyOrder   -> triggered by order payment
 
-Route::group(['middleware' => 'auth:api'], function(){
-    
-    Route::group(['middleware' => 'isAdmin'], function(){
+Route::group(['middleware' => 'auth:api'], function () {
+
+    Route::group(['middleware' => 'isAdmin'], function () {
         Route::controller(ProductController::class)->group(function () {
             Route::post('/add_product', 'add');
             Route::post('/update_product', 'update');
@@ -45,6 +45,14 @@ Route::group(['middleware' => 'auth:api'], function(){
         });
     });
 
+    Route::controller(ProductController::class)->group(function () {
+        Route::get('/products', 'all');
+    });
+
+    Route::controller(ProductController::class)->group(function () {
+        Route::get('/filtered_products', 'getFilteredProducts');
+    });
+
     Route::controller(AuthController::class)->group(function () {
         Route::post('logout', 'logout');
         Route::post('refresh', 'refresh');
@@ -63,17 +71,11 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::controller(NotificationController::class)->group(function () {
         Route::get('/notifications_user', 'getByUser');
     });
-
 });
 
-Route::group(['prefix' => ''], function(){
+Route::group(['prefix' => ''], function () {
     Route::controller(AuthController::class)->group(function () {
         Route::post('login', 'login');
         Route::post('register', 'register');
     });
-    Route::controller(ProductController::class)->group(function () {
-        Route::get('/products', 'all');
-    });
-
 });
-
