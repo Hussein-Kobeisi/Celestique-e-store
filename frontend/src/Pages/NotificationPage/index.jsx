@@ -16,6 +16,7 @@ const NotificationsPage = () => {
 //   }, []);
 
   return (
+    <div className="notifications-page">
     <div className="notifications-container">
       <h2>Notifications</h2>
 
@@ -37,6 +38,7 @@ const NotificationsPage = () => {
           status={n.status}
         />
       ))}
+    </div>
     </div>
   );
 };
