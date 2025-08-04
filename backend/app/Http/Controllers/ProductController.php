@@ -5,17 +5,17 @@ namespace App\Http\Controllers;
 use App\Services\ProductService;
 use App\Http\Requests\AddProductRequest;
 use App\Http\Requests\UpdateProductRequest;
-use App\Services\ImageService;
+use App\Http\Requests\ProductFilterRequest;
 
 class ProductController extends Controller
 {
     public function add(AddProductRequest $request)
-{  
-    $validated = $request->validated();
-    $productData = ProductService::productWithImage($validated);
-    $product = ProductService::add($productData);
-    return $this->responseJson($product, "Product added successfully", 200);
-}
+    {
+        $validated = $request->validated();
+        $productData = ProductService::productWithImage($validated);
+        $product = ProductService::add($productData);
+        return $this->responseJson($product, "Product added successfully", 200);
+    }
 
     public function update(UpdateProductRequest $request)
     {
@@ -35,5 +35,11 @@ class ProductController extends Controller
     {
         $payload = ProductService::all();
         return $this->responseJson($payload, "Products retrieved successfully", 200);
+    }
+
+    public function getFilteredProducts(ProductFilterRequest $request)
+    {
+        $products = ProductService::getFilteredProducts($request);
+        return $this->responseJson($products, "Products fetched successfully", 200);
     }
 }
