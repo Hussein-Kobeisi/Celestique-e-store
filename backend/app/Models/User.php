@@ -44,7 +44,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function auditLogs()
     {
-        return $this->hasMany(Audit_Log::class);
+        return $this->hasMany(AuditLog::class);
     }
 
     public function notifications()
@@ -72,13 +72,5 @@ class User extends Authenticatable implements JWTSubject
         return [
             'password' => 'hashed',
         ];
-    }
-
-    public function getJWTIdentifier(){
-        return $this->getKey();
-    }
-
-    public function getJWTCustomClaims(){
-        return [];
     }
 }

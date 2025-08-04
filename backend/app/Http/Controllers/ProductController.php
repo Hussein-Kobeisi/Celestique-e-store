@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Services\ProductService;
 use App\Http\Requests\AddProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Http\Requests\ProductFilterRequest;
 
 class ProductController extends Controller
 {
     public function add(AddProductRequest $request)
-    {  
-        $request = $request->validated();
-        ProductService::add($request);
-        
-        return response()->json($product, 200);
+    {
+        $validated = $request->validated();
+        $productData = ProductService::productWithImage($validated);
+        $product = ProductService::add($productData);
+        return $this->responseJson($product, "Product added successfully", 200);
     }
 
     public function update(UpdateProductRequest $request)
@@ -24,15 +24,22 @@ class ProductController extends Controller
 
         $product = ProductService::fill($product, $request);
         ProductService::save($product);
-        
-        return response()->json($product, 200);
-        
+
+        return $this->responseJson($product, "Product updated successfully", 200);
+
+        // TODO:
         //notify listing page listener that product was updated
     }
 
     public function all()
     {
         $payload = ProductService::all();
-        return response()->json($payload, 200);
+        return $this->responseJson($payload, "Products retrieved successfully", 200);
+    }
+
+    public function getFilteredProducts(ProductFilterRequest $request)
+    {
+        $products = ProductService::getFilteredProducts($request);
+        return $this->responseJson($products, "Products fetched successfully", 200);
     }
 }

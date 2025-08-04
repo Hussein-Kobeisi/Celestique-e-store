@@ -18,7 +18,7 @@ class AddProductRequest extends FormRequest
             'description' => 'required|string|max:1000',
             'price'      => 'required|numeric|min:0',
             'stock'      => 'required|integer|min:0',
-            'image_url' => 'required|string|max:255',
+            'image_base64' => 'required|string',
             'category'   => 'required|string|in:ring,earring,necklace,bracelet',
         ];
     }

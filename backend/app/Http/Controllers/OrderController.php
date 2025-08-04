@@ -4,26 +4,27 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\OrderService;
+use App\Services\OrderItemService;
+use App\Services\NotificationService;
+use App\Services\HourlyOrderService;
+use App\Services\DailyRevenueService;
+use App\Services\AuditLogService;
+use App\Http\Requests\AddOrderRequest;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
 
-    protected OrderService $orderService;
-
-    public function __construct(OrderService $orderService)
-    {
-        $this->orderService = $orderService;
-    }
 
     public function all()
     {
-        $orders = $this->orderService->getAllOrders();
+        $orders = OrderService::getAllOrders();
         return $this->responseJson($orders, "success", 200);
     }
 
     public function getByUser(Request $request)
     {
-        $orders = $this->orderService->getOrdersByAuthenticatedUser();
+        $orders = OrderService::getOrdersByAuthenticatedUser();
         return $this->responseJson($orders, "success", 200);
     }
 
@@ -34,7 +35,7 @@ class OrderController extends Controller
             'status' => 'required|in:pending,paid,packed,shipped',
         ]);
 
-        $order = $this->orderService->updateOrderStatus(
+        $order = OrderService::updateOrderStatus(
             $request->order_id,
             $request->status
         );
@@ -47,16 +48,32 @@ class OrderController extends Controller
     }
 
 
-    public function add(Request $request)
+    public function add(AddOrderRequest $request)
     {
-        // TODO: Implement full order creation with:
-        // - order items
-        // - notifications (SMS)
-        // - daily/hourly metrics update
-        // - audit log
-        // - stock update
-        // - admin broadcast
+        $request = $request->validated();
+        $user = Auth::user();
 
-        // Once implemented, delegate to $this->orderService->createOrder($request->all())
+        $order = OrderService::addOrder($request['total_amount'], $user->id);
+        $orderItems = OrderItemService::addItems($request['order_items'], $order->id);
+        $notification = NotificationService::createCheckoutNotification($order);
+        $hourlyOrder = HourlyOrderService::addOrUpdateHourlyOrder(count($orderItems));
+        $dailyRevenue = DailyRevenueService::addOrUpdateDailyRevenue($order->total_amount);
+        $auditLog = AuditLogService::createOrderAuditLog($order);
+
+
+        return $this->responseJson([
+            'order' => $order,
+            'order_items' => $orderItems,
+            'notification' => $notification,
+            'hourly_order' => $hourlyOrder,
+            'daily_revenue' => $dailyRevenue,
+            'audit_log' => $auditLog
+        ], "Order created successfully", 201);
+
+        // TODO: 
+        // - update user total_orders/total_spent
+        // - live add to admin dashboard
+        // - user sees live update of order status
+        // send email to user
     }
 }
