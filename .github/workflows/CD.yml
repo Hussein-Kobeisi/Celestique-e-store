@@ -1,0 +1,27 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Deploy to EC2 via SSH
+        uses: appleboy/ssh-action@v0.1.7
+        with:
+          host: 15.188.195.97
+          username: ubuntu
+          key: ${{ secrets.FSE_TEAM4_EC2_SSH_KEY }}
+          script: |
+            cd /home/ubuntu/celestique || git clone https://github.com/Hussein-Kobeisi/Celestique-e-store.git /home/ubuntu/celestique
+            cd /home/ubuntu/celestique
+            git pull origin main
+            docker-compose down
+            docker-compose up -d --build
