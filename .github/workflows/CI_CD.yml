@@ -1,4 +1,4 @@
-name: CI
+name: Test and Deploy
 on:
   push:
     branches:
@@ -9,7 +9,7 @@ on:
 
 jobs:
   test:
-    name: Laravel Feature Tests CI
+    name: CI
     runs-on: ubuntu-latest
 
     services:
