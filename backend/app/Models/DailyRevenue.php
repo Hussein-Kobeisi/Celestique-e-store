@@ -5,13 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class hourly_order extends Model
+class DailyRevenue extends Model
 {
-    /** @use HasFactory<\Database\Factories\HourlyOrderFactory> */
+    /** @use HasFactory<\Database\Factories\DailyRevenueFactory> */
     use HasFactory;
 
     protected $fillable = [
         'date_time',
-        'order_count'
+        'revenue'
     ];
 }
