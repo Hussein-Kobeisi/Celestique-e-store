@@ -3,6 +3,7 @@ import axios from "axios";
 import "./index.css";
 import goldenRingImage from "../../assets/Goldenrings.png";
 import ProductCard from "../../components/ProductCard";
+import Navbar from "../../components/Shared/Usernavbar";
 
 const dummyProducts = new Array(8).fill({
   name: "HEXA GOLD RING",
@@ -58,7 +59,10 @@ const Products = () => {
   };
 
   return (
+    <>
+    <Navbar />
     <div className="products-page">
+      
       <div className="filters">
         <div className="filters-left">
           <div className="select-wrapper">
@@ -109,6 +113,7 @@ const Products = () => {
         <button className="products-page-btn" onClick={() => setpage((prev) => prev + 1)}> Next &gt;</button>
       </div>
     </div>
+    </>
   );
 };
 
