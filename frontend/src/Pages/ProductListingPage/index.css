@@ -168,3 +168,33 @@
     align-self: center;
     justify-self: center;
   }
+
+  .products-page-footer{
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    justify-content: center;
+    font-family: 'Segoe UI', sans-serif;
+    font-weight: 500;
+    width: 100%;
+    padding: 20px 0;
+  }
+
+  .products-page-number{
+    font-size: 18px;
+    padding: 0 20px;
+  }
+
+  .products-page-btn{
+    border: none;
+    background-color: #5c464600;
+    font-family: 'Segoe UI', sans-serif;
+    font-weight: 500;
+  }
+  /* .products-page-btn:hover{
+    cursor: pointer;
+  } */
+
+  button:hover{
+    cursor: pointer;
+  }

@@ -29,7 +29,7 @@ const Products = () => {
                                           +"&search="+(filters.search??''));
 
       console.log(response.data.payload.data);
-      const data = response.data;
+      const data = response.data.payload.data;
 
       if (data && Array.isArray(data) && data.length > 0) {
         setProducts(data);
@@ -46,7 +46,7 @@ const Products = () => {
   //this is initial fetch , no filters here . 
   useEffect(() => {
     fetchProducts();
-  }, []);
+  }, [page]);
 
   const handleFilter = () => {
     const filters = {
@@ -102,6 +102,11 @@ const Products = () => {
       {products.map((product, id) => (
   <ProductCard key={id} product={product} />
 ))}
+      </div>
+      <div className="products-page-footer">
+        <button className="products-page-btn" onClick={() => setpage((prev) => Math.max(prev - 1, 1))}> &lt; Prev </button>
+        <p className="products-page-number">{page}</p>
+        <button className="products-page-btn" onClick={() => setpage((prev) => prev + 1)}> Next &gt;</button>
       </div>
     </div>
   );

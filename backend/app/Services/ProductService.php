@@ -40,7 +40,7 @@ class ProductService
 
     static function getFilteredProducts(ProductFilterRequest $request)
     {
-        return ProductQueryBuilder::build($request)->paginate(15);
+        return ProductQueryBuilder::build($request)->paginate(8);
     }
 
     static function tryDecreaseStock($productId, $quantity)
