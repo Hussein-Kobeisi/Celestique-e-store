@@ -36,7 +36,7 @@ export const useLoginFormLogic = () => {
         role: "user", // adjust this if your API returns the role
       });
 
-      navigate("/"); // ✅ Redirect after login
+      navigate("/products"); // ✅ Redirect after login
     } catch (error) {
       const message = error.response?.data?.message || "Error during login. Please check your inputs.";
       console.error(message, error);
