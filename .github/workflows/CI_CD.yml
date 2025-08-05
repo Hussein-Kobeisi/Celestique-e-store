@@ -75,11 +75,11 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-
+  
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
+  
       - name: Deploy to EC2 via SSH
         uses: appleboy/ssh-action@v0.1.7
         with:
@@ -90,5 +90,20 @@ jobs:
             cd /home/ubuntu/celestique || git clone https://github.com/Hussein-Kobeisi/Celestique-e-store.git /home/ubuntu/celestique
             cd /home/ubuntu/celestique
             git pull origin main
+            
+            # Install Docker Buildx if missing
+            mkdir -p ~/.docker/cli-plugins/
+            if [ ! -f ~/.docker/cli-plugins/docker-buildx ]; then
+              echo "Installing Docker Buildx..."
+              curl -SL https://github.com/docker/buildx/releases/latest/download/buildx-$(uname -s | tr '[:upper:]' '[:lower:]')-$(uname -m) \
+                -o ~/.docker/cli-plugins/docker-buildx
+              chmod +x ~/.docker/cli-plugins/docker-buildx
+            else
+              echo "Buildx already installed."
+            fi
+            
+            docker buildx version
+            
             docker-compose down
             docker-compose up -d --build
+
