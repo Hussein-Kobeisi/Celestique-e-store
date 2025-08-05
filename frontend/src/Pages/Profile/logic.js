@@ -63,7 +63,7 @@ export const useProfileLogic = () => {
     setSuccessMessage(null); 
 
     try {
-      await axios.post(`http://localhost:8000/api/v0.1/user/ProfileUpdate/${userId}`, {
+      await axios.post(`http://localhost:8000/api/update_user/${userId}`, {
         username: formData.username,
         email: formData.email,
         phoneNumber: formData.phoneNumber,
