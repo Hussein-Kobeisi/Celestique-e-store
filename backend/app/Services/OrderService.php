@@ -4,8 +4,9 @@ namespace App\Services;
 
 use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
-use App\Services\OrderItemService;
-
+use Illuminate\Support\Facades\Mail;
+use App\Mail\OrderConfirmationMail;
+use App\Mail\UpdateOrderStatusMail;
 class OrderService
 {
     static function getAllOrders()
@@ -46,5 +47,15 @@ class OrderService
         $order->status = 'pending';
         $order->save();
         return $order;
+    }
+
+    static function sendConfirmationEmail($order)
+    {
+        Mail::to($order->user->email)->send(new OrderConfirmationMail($order));
+    }
+
+    static function sendUpdateStatusEmail($order)
+    {
+        Mail::to($order->user->email)->send(new UpdateOrderStatusMail($order));
     }
 }
