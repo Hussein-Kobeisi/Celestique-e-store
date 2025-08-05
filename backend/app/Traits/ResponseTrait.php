@@ -11,4 +11,11 @@ trait ResponseTrait{
         ], $status_code);
     }
 
+    static function errorJSON($message, $status_code = 422) {
+        return response()->json([
+            "status" => "error",
+            "message" => $message,
+        ], $status_code);
+    }
+
 }
