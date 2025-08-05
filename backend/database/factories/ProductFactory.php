@@ -22,7 +22,7 @@ class ProductFactory extends Factory
             'price' => $this->faker->randomFloat(2, 1, 1000),
             'image_url' => $this->faker->optional()->imageUrl(),
             'stock' => $this->faker->numberBetween(0, 1000),
-            'category' => $this->faker->word(),
+            'category' => $this->faker->randomElement(['ring', 'earring', 'necklace', 'bracelet']),
             'created_at' => now(),
             'updated_at' => now(),
         ];

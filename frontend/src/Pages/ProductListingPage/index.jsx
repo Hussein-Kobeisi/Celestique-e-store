@@ -17,11 +17,16 @@ const Products = () => {
   const [category, setCategory] = useState("");
   const [sort, setSort] = useState("");
   const [error, setError] = useState(null);
+  const [page, setpage] = useState(1);
 
   // here fetching the products if there  is a filters or not . if there is a filter this request will be sent another time after the first request 
   const fetchProducts = async (filters = {}) => {
     try {
-      const response = await axios.post("http://localhost:8000/api/products", filters);
+      const response = await axios.get("http://127.0.0.1:8000/api/filtered_products?"
+                                          +"page="+page
+                                          +"&category="+(filters.category??'')
+                                          +"&sort="+(filters.sort??'')
+                                          +"&search="+(filters.search??''));
       const data = response.data;
 
       if (data && Array.isArray(data) && data.length > 0) {
