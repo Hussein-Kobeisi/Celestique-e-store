@@ -27,6 +27,8 @@ const Products = () => {
                                           +"&category="+(filters.category??'')
                                           +"&sort="+(filters.sort??'')
                                           +"&search="+(filters.search??''));
+
+      console.log(response.data.payload.data);
       const data = response.data;
 
       if (data && Array.isArray(data) && data.length > 0) {
@@ -71,9 +73,10 @@ const Products = () => {
           <div className="select-wrapper">
             <select value={category} onChange={(e) => setCategory(e.target.value)}>
               <option value="">Category</option>
-              <option value="Rings">Rings</option>
-              <option value="Necklaces">Necklaces</option>
-              <option value="Bracelets">Bracelets</option>
+              <option value="Ring">Rings</option>
+              <option value="Necklace">Necklaces</option>
+              <option value="Bracelet">Bracelets</option>
+              <option value="Earring">Earrings</option>
             </select>
           </div>
         </div>
