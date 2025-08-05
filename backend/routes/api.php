@@ -87,3 +87,6 @@ Route::group(['prefix' => ''], function () {
     
 
 });
+Route::get('/test', function () {
+    return response()->json(['status' => 'API is working']);
+});
