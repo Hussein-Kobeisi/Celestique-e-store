@@ -6,7 +6,7 @@ import CartPage from "../Pages/CartPage";
 import Profile from "../Pages/Profile"; 
 import AddProduct from "../Pages/AddProduct"; 
 import { UserProvider } from "../components/Context/userContext";
-
+import ViewProduct from "../Pages/ViewProduct";
 
 const MyRoutes = () => {
   return (
@@ -18,6 +18,7 @@ const MyRoutes = () => {
       <Route path="/cart" element={<CartPage/>} />
       <Route path="/profile" element={<Profile/>} />
       <Route path="/addproduct" element={<AddProduct/>} />
+      <Route path="/viewproduct" element={<ViewProduct/>} />
     </Routes>
     </UserProvider>
 

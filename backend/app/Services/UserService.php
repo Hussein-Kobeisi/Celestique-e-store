@@ -30,4 +30,14 @@ class UserService
         return $user->delete();
     }
 
+    static function addUserTotalSpent($user, $amount){
+        $user->total_spent += $amount;
+        $user->save();
+    }
+
+    static function addUserItemsPurchased($user, $itemsCount){
+        $user->items_purchased += $itemsCount;
+        $user->save();
+    }
+
 }

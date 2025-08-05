@@ -15,8 +15,6 @@ class DailyRevenueController extends Controller
 
     public function addOrUpdate(Request $request)
     {
-        // TODO:
-        // called by OrderController to add or update revenue for today
-        // notify admin analytics listener
+
     }
 }

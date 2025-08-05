@@ -13,6 +13,10 @@ class ProductService
     {
         return Product::find($id);
     }
+    static function find($id)
+    {
+        return Product::find($id);
+    }
 
     static function add($data)
     {
@@ -62,6 +66,6 @@ class ProductService
             'image_url' => $imagePath,
         ]);
         unset($productData['image_base64']); // remove base64 from the data before saving
-        return  $productData; 
+        return  $productData;
     }
 }
