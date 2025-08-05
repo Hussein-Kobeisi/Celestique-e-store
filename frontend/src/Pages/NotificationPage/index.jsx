@@ -1,23 +1,43 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import NotificationItem from "../../components/NotificationItem";
 import "./index.css";
+import echo from "../../components/Shared/Echo/echo";
+
+
 
 const NotificationsPage = () => {
   const [notifications, setNotifications] = useState([]);
+  const dummyUser = {
+    "id": 11,
+    "name": "hsne",
+    "email": "axaa@kob.com",
+  }
+
+  localStorage.setItem("user", JSON.stringify(dummyUser))
 
   useEffect(() => {
     const token = JSON.parse(localStorage.getItem("token"));
-    console.log("Token:", token);
+    const user = JSON.parse(localStorage.getItem("user"));
+
     axios.get("http://127.0.0.1:8000/api/notifications_user", {
 
       headers: {
         Authorization: `Bearer ${token}`,
       }})
       .then((response) => {
-        console.log("Response:", response.data.payload);
         setNotifications(response.data.payload);
       })
+
+
+      const channel = echo.private(`notifications.${1}`)
+        .listen("NotificationSent", (event) => {
+          // setNotifications((prev) => [event.notification, ...prev]);
+          console.log('New NOTOFICATION!!!');
+        });
+
+      return () => {echo.leave(`notifications.${1}`)};
+
   }, []);
 
   return (
