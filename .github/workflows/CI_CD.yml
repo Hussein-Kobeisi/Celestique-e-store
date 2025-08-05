@@ -87,6 +87,7 @@ jobs:
           username: ubuntu
           key: ${{ secrets.FSE_TEAM4_EC2_SSH_KEY }}
           script: |
+            set -xe  # <-- this makes the shell print each command and stop on errors
             cd /home/ubuntu/celestique || git clone https://github.com/Hussein-Kobeisi/Celestique-e-store.git /home/ubuntu/celestique
             cd /home/ubuntu/celestique
             git pull origin main
