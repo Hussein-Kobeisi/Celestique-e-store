@@ -92,8 +92,8 @@ jobs:
             cd /home/ubuntu/celestique
             git pull origin main
       
-            docker buildx create --use || true
-            docker buildx version
+            # docker buildx create --use || true
+            # docker buildx version
       
             docker-compose down
             docker-compose up -d --build
