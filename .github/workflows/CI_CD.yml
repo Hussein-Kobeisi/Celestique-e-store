@@ -91,17 +91,19 @@ jobs:
             cd /home/ubuntu/celestique
             git pull origin main
             
-            # Install Docker Buildx if missing
+            # Install Docker Buildx
             mkdir -p ~/.docker/cli-plugins/
-            if [ ! -f ~/.docker/cli-plugins/docker-buildx ]; then
-              echo "Installing Docker Buildx..."
-              curl -SL https://github.com/docker/buildx/releases/latest/download/buildx-$(uname -s | tr '[:upper:]' '[:lower:]')-$(uname -m) \
-                -o ~/.docker/cli-plugins/docker-buildx
-              chmod +x ~/.docker/cli-plugins/docker-buildx
-            else
-              echo "Buildx already installed."
+            ARCH=$(uname -m)
+            OS=$(uname -s | tr '[:upper:]' '[:lower:]')
+            if [ "$ARCH" = "x86_64" ]; then
+              ARCH="amd64"
+            elif [ "$ARCH" = "aarch64" ]; then
+              ARCH="arm64"
             fi
-            
+            echo "Installing Docker Buildx for $OS-$ARCH..."
+            curl -LO https://github.com/docker/buildx/releases/latest/download/buildx-${OS}-${ARCH}.tar.gz
+            tar -xvzf buildx-${OS}-${ARCH}.tar.gz -C ~/.docker/cli-plugins
+            chmod +x ~/.docker/cli-plugins/docker-buildx
             docker buildx version
             
             docker-compose down
