@@ -15,8 +15,6 @@ class HourlyOrderController extends Controller
 
     public function addOrUpdate(Request $request)
     {
-        // TODO:
-        // called by OrderController to add or update hourly order count
-        // notify admin analytics listener
+
     }
 }
