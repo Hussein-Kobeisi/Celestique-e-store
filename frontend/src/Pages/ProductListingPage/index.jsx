@@ -3,6 +3,8 @@ import axios from "axios";
 import "./index.css";
 import goldenRingImage from "../../assets/Goldenrings.png";
 import ProductCard from "../../components/ProductCard";
+import {getProductsApi} from "../../apis/apis";
+import Navbar from "../../components/Shared/Usernavbar";
 
 const dummyProducts = new Array(8).fill({
   name: "HEXA GOLD RING",
@@ -21,7 +23,7 @@ const Products = () => {
   // here fetching the products if there  is a filters or not . if there is a filter this request will be sent another time after the first request 
   const fetchProducts = async (filters = {}) => {
     try {
-      const response = await axios.post("http://localhost:8000/api/products", filters);
+      const response = await axios.get(getProductsApi, filters);
       const data = response.data;
 
       if (data && Array.isArray(data) && data.length > 0) {
@@ -51,7 +53,12 @@ const Products = () => {
   };
 
   return (
+    <>
+    <Navbar activeLink="Products" />
+  
+
     <div className="products-page">
+      
       <div className="filters">
         <div className="filters-left">
           <div className="select-wrapper">
@@ -96,6 +103,7 @@ const Products = () => {
 ))}
       </div>
     </div>
+    </>
   );
 };
 

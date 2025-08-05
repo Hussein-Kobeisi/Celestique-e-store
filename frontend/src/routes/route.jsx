@@ -5,9 +5,12 @@ import NotificationsPage from "../Pages/NotificationPage";
 import CartPage from "../Pages/CartPage";
 import Profile from "../Pages/Profile"; 
 import AddProduct from "../Pages/AddProduct"; 
+import { UserProvider } from "../components/Context/userContext";
+
 
 const MyRoutes = () => {
   return (
+    <UserProvider>
     <Routes>
       <Route path="/auth" element={<Auth/>} />
       <Route path="/products" element={<Products/>} />
@@ -16,7 +19,10 @@ const MyRoutes = () => {
       <Route path="/profile" element={<Profile/>} />
       <Route path="/addproduct" element={<AddProduct/>} />
     </Routes>
+    </UserProvider>
+
   );
 };
+
 
 export default MyRoutes;

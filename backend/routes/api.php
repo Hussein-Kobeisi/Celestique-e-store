@@ -79,3 +79,6 @@ Route::group(['prefix' => ''], function () {
         Route::post('register', 'register');
     });
 });
+Route::get('/test', function () {
+    return response()->json(['status' => 'API is working']);
+});
