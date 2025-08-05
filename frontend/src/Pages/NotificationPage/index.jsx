@@ -6,14 +6,19 @@ import "./index.css";
 const NotificationsPage = () => {
   const [notifications, setNotifications] = useState([]);
 
-//   useEffect(() => {
-//     const fetchNotifications = async () => {
-//       const res = await axios.get("http://localhost:8000/api/notifications");
-//       setNotifications(res.data);
-//     };
-  
-//     fetchNotifications();
-//   }, []);
+  useEffect(() => {
+    const token = JSON.parse(localStorage.getItem("token"));
+    console.log("Token:", token);
+    axios.get("http://127.0.0.1:8000/api/notifications_user", {
+
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }})
+      .then((response) => {
+        console.log("Response:", response.data.payload);
+        setNotifications(response.data.payload);
+      })
+  }, []);
 
   return (
     <div className="notifications-page">
@@ -34,8 +39,8 @@ const NotificationsPage = () => {
           key={n.id}
           message={n.message}
           type={n.type}
-          time={new Date(n.time).toLocaleDateString()}
-          status={n.status}
+          time={new Date(n.created_at).toLocaleDateString()}
+          status={n.is_read ? "Read" : "Unread"}
         />
       ))}
     </div>

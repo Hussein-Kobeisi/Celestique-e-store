@@ -7,16 +7,25 @@
     background-color: #fde5c3;
   }
   
-  .notification-status.read {
+  .notification-message{
+    width: 60%;
+    padding: 0;
+    margin: 0;
+  }
+
+  .notification-type{
+    width: 13%;
+  }
+  .notification-time{
+    width: 13%;
+  }
+
+  .notification-status{
     background-color: #ccc;
     color: white;
     padding: 4px 12px;
     border-radius: 20px;
-  }
-  
+  }  
   .notification-status.unread {
     background-color: goldenrod;
-    color: white;
-    padding: 4px 12px;
-    border-radius: 20px;
   }
