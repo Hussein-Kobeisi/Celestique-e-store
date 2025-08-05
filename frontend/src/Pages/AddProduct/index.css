@@ -1,0 +1,448 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #ffffff;
+    color: #333;
+    line-height: 1.6;
+}
+
+.ap-header {
+    background: #DCCDBE;
+    padding: 1.5rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.ap-header-content {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ap-logo {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #332D29;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+}
+
+.ap-logo::before {
+    content: "💎";
+    font-size: 1.6rem;
+}
+
+.ap-nav-links {
+    display: flex;
+    gap: 3rem;
+    align-items: center;
+}
+
+.ap-nav-link {
+    color: #332D29;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+    font-size: 1.2rem;
+}
+
+.ap-nav-link:hover {
+    color: #C39706;
+}
+
+.ap-nav-link.ap-active {
+    color: #C39706;
+    font-weight: 600;
+}
+
+.ap-user-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.ap-user-avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: #332D29;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.ap-notification-btn {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: #332D29;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.ap-notification-btn:hover {
+    background: #C39706;
+}
+
+.ap-main-content {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 4rem 3rem;
+    min-height: calc(100vh - 120px);
+}
+
+.ap-product-card {
+    background: #DCCDBE;
+    border-radius: 20px;
+    padding: 3rem;
+    box-shadow: 0 10px 30px rgba(51, 45, 41, 0.1);
+}
+
+.ap-card-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #332D29;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #332D29;
+}
+
+.ap-form-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+}
+
+.ap-form-left {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.ap-form-right {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.ap-form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.ap-form-label {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #332D29;
+    margin-bottom: 0.5rem;
+}
+
+.ap-form-input {
+    width: 100%;
+    padding: 1rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    background: white;
+    color: #332D29;
+    transition: all 0.3s;
+    font-family: inherit;
+}
+
+.ap-form-input:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(195, 151, 6, 0.3);
+}
+
+.ap-form-input::placeholder {
+    color: #999;
+}
+
+.ap-form-textarea {
+    min-height: 120px;
+    resize: vertical;
+    font-family: inherit;
+}
+
+.ap-image-upload {
+    border: 2px dashed #332D29;
+    border-radius: 12px;
+    padding: 2rem;
+    text-align: center;
+    background: white;
+    transition: all 0.3s;
+    cursor: pointer;
+    position: relative;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.ap-image-upload:hover {
+    border-color: #C39706;
+    background: #fefefe;
+}
+
+.ap-image-upload.ap-dragover {
+    border-color: #C39706;
+    background: #f9f9f9;
+}
+
+.ap-upload-icon {
+    font-size: 3rem;
+    color: #666;
+    margin-bottom: 1rem;
+}
+
+.ap-upload-text {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.ap-upload-link {
+    color: #C39706;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.ap-upload-link:hover {
+    color: #332D29;
+}
+
+.ap-image-preview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.ap-remove-image {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: #FF1111;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+}
+
+.ap-quantity-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.ap-quantity-label {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #332D29;
+}
+
+.ap-quantity-controls {
+    display: flex;
+    align-items: center;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.ap-quantity-btn {
+    background: none;
+    border: none;
+    padding: 0.8rem 1rem;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: #332D29;
+    transition: background 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ap-quantity-btn:hover {
+    background: #f0f0f0;
+}
+
+.ap-quantity-input {
+    border: none;
+    padding: 0.8rem;
+    width: 60px;
+    text-align: center;
+    font-size: 1rem;
+    background: white;
+    color: #332D29;
+}
+
+.ap-quantity-input:focus {
+    outline: none;
+}
+
+.ap-form-actions {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(51, 45, 41, 0.2);
+}
+
+.ap-btn {
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: all 0.3s;
+    min-width: 120px;
+}
+
+.ap-btn-cancel {
+    background: transparent;
+    color: #332D29;
+    border: 1px solid #332D29;
+}
+
+.ap-btn-cancel:hover {
+    background: #332D29;
+    color: white;
+}
+
+.ap-btn-create {
+    background: #332D29;
+    color: white;
+}
+
+.ap-btn-create:hover {
+    background: #4a453f;
+}
+
+.ap-btn-create:disabled {
+    background: #999;
+    cursor: not-allowed;
+}
+
+.ap-success-message {
+    background: #C39706;
+    color: white;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    font-weight: 500;
+}
+
+.ap-error-message {
+    background: #FF6666;
+    color: white;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    font-weight: 500;
+}
+
+.ap-hidden-input {
+    display: none;
+}
+
+@media (max-width: 1024px) {
+    .ap-form-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .ap-main-content {
+        padding: 2rem 1.5rem;
+    }
+
+    .ap-product-card {
+        padding: 2rem;
+    }
+
+    .ap-header-content {
+        padding: 0 1.5rem;
+    }
+
+    .ap-nav-links {
+        display: none;
+    }
+
+    .ap-form-actions {
+        flex-direction: column;
+    }
+
+    .ap-btn {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .ap-header-content {
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .ap-logo {
+        font-size: 1.4rem;
+    }
+
+    .ap-user-avatar,
+    .ap-notification-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 0.9rem;
+    }
+
+    .ap-card-title {
+        font-size: 1.5rem;
+    }
+
+    .ap-form-input {
+        padding: 0.8rem;
+        font-size: 0.9rem;
+    }
+
+    .ap-btn {
+        padding: 0.8rem 1.5rem;
+        font-size: 0.9rem;
+    }
+
+    .ap-image-upload {
+        min-height: 150px;
+        padding: 1.5rem;
+    }
+
+    .ap-upload-icon {
+        font-size: 2rem;
+    }
+}
