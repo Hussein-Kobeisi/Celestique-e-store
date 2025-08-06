@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./index.css";
 import image from "../../assets/image 10.png";
 import CartItem from "../../components/CartItem";
 
 const CartPage = () => {
+  const token = JSON.parse(localStorage.getItem('token'))
   const [cartItems, setCartItems] = useState([
     {
       id: 1,
@@ -13,21 +14,29 @@ const CartPage = () => {
       quantity: 0,
       image: require("../../assets/image 10.png"),
     },
-    {
-      id: 2,
-      name: "Lotus Ring Gold Earrings (18KT)",
-      price: 214,
-      quantity: 0,
-      image: require("../../assets/image 10.png"),
-    },
-    {
-      id: 3,
-      name: "Lotus Ring Gold Earrings (18KT)",
-      price: 214,
-      quantity: 0,
-      image: require("../../assets/image 10.png"),
-    },
   ]);
+
+  const fetchCartProducts = () => {
+    const localcartItems = JSON.parse(localStorage.getItem("cart")) || []
+
+    const fetchPromises = localcartItems.map(item => 
+      axios.get(`http://localhost:8000/api/products/${item.productId}`)    
+    )
+
+    Promise.all(fetchPromises)
+      .then(responses => {
+        const fullCartData = responses.map((response, index) => ({
+          ...response.data.payload, // The product data from the API
+          quantity: localcartItems[index].quantity // The quantity from local storage
+        }));
+        console.log(fullCartData)
+        setCartItems(fullCartData);
+      })
+      .catch(error => {console.error("Error fetching cart items:", error)});
+
+  }
+
+  useEffect(fetchCartProducts, [])
 
   const increment = (id) => {
     setCartItems(prev =>
@@ -51,48 +60,28 @@ const CartPage = () => {
     setCartItems(prev => prev.filter(item => item.id !== id));
   };
 
-  const handleCheckout = async () => {
-    const userId = 3; // Replace with actual user ID if needed
-
-    const itemsToSend = cartItems
-      .filter(item => item.quantity > 0)
-      .map(item => ({
-        product_id: item.id,
-        quantity: item.quantity,
-        price: item.price,
-      }));
-
-    const total = itemsToSend.reduce(
-      (sum, item) => sum + item.price * item.quantity,
-      0
-    );
-
-    if (itemsToSend.length === 0) {
-      alert("Your cart is empty.");
-      return;
-    }
-
-    try {
-      const response = await axios.post("http://localhost:8000/api/checkout", {
-        user_id: userId,
-        items: itemsToSend,
-        total: total,
-      });
-
-      alert(response.data.message || "Order placed!");
-      setCartItems(prev =>
-        prev.map(item => ({ ...item, quantity: 0 }))
-      );
-    } catch (err) {
-      console.error("Checkout error:", err);
-      alert("Checkout failed. Try again.");
-    }
-  };
-
   const total = cartItems.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0
   );
+
+  const handleCheckout = () => {
+    const formattedOrderItems = cartItems.map(item => ({
+      product_id: item.id, // Maps item.id to product_id
+      quantity: item.quantity,
+    }));
+    const requestBody = {
+      total_amount: total, // Ensure 'total' is correctly calculated
+      order_items: formattedOrderItems,
+    };
+    axios.post('http://localhost:8000/api/add_order',
+      requestBody,
+      {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+    })
+  }
 
   return (
     <div className="cart-page">

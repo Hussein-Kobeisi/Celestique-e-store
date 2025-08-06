@@ -42,8 +42,6 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::controller(OrderController::class)->group(function () {
             Route::get('/orders_all', 'all');
             Route::post('/update_order', 'update');
-            Route::post('/add_order', 'add');
-            Route::get('/orders_user', 'getByUser');
         });
 
         Route::controller(DailyRevenueController::class)->group(function () {
@@ -60,6 +58,11 @@ Route::group(['middleware' => 'auth:api'], function () {
             Route::post('/delete_user',         'delete');
             Route::post('/user/{id}',         'getUserById');
         });
+    });
+
+    Route::controller(OrderController::class)->group(function () {
+        Route::post('/add_order', 'add');
+        Route::get('/orders_user', 'getByUser');
     });
 
     Route::controller(AuthController::class)->group(function () {
