@@ -49,7 +49,7 @@ class OrderController extends Controller
         $order = OrderService::addOrder($request['total_amount'], $user->id);
         $orderItems = OrderItemService::addItems($request['order_items'], $order->id);
 
-        OrderService::handlePostOrderCreation($order, $user, count($orderItems));
+        OrderService::handlePostOrderCreation($order, $user, $orderItems);
 
         return $this->responseJson([
             'order' => $order,

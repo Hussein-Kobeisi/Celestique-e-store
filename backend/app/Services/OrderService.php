@@ -13,6 +13,7 @@ use App\Jobs\UpdateHourlyOrderAnalytics;
 use App\Jobs\UpdateDailyRevenueAnalytics;
 use App\Jobs\UpdateUserStats;
 use App\Jobs\SendOrderConfirmationEmail;
+use App\Jobs\UpdateProductStock;
 
 class OrderService
 {
@@ -56,14 +57,15 @@ class OrderService
         return $order;
     }
 
-    public static function handlePostOrderCreation($order, $user, $itemCount)
+    public static function handlePostOrderCreation($order, $user, $orderItems)
     {
         SendOrderConfirmationEmail::dispatch($order);
         LogAudit::dispatch($order);
         CreateCheckoutNotification::dispatch($order);
-        UpdateHourlyOrderAnalytics::dispatch($itemCount);
+        UpdateHourlyOrderAnalytics::dispatch(count($orderItems));
         UpdateDailyRevenueAnalytics::dispatch($order->total_amount);
-        UpdateUserStats::dispatch($user, $order->total_amount, $itemCount);
+        UpdateUserStats::dispatch($user, $order->total_amount, count($orderItems));
+        UpdateProductStock::dispatch($orderItems);
     }
 
 
@@ -75,5 +77,12 @@ class OrderService
     static function sendUpdateStatusEmail($order)
     {
         Mail::to($order->user->email)->send(new UpdateOrderStatusMail($order));
+    }
+
+     static function updateProductStock($orderItems)
+    {
+        foreach ($orderItems as $item) {
+            ProductService::tryDecreaseStock($item['product_id'], $item['quantity']);
+        }
     }
 }
