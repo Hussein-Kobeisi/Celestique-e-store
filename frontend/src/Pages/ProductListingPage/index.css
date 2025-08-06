@@ -28,7 +28,9 @@
   
   .select-wrapper select {
     padding: 10px 32px 10px 16px; 
-    background-color: #3c2f2f;
+    /* background-color: #3c2f2f;  3c2f2f */
+    background-color: #ddd;
+    
     color: #fff;
     border: none;
     border-radius: 100px;
