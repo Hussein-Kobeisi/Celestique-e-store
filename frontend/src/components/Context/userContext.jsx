@@ -9,9 +9,9 @@ export const UserProvider = ({ children }) => {
 
   // Restore user from localStorage on page load
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    const id = localStorage.getItem("userId");
-    const role = localStorage.getItem("role");
+    const token = JSON.parse(localStorage.getItem("token"));
+    const id = JSON.parse(localStorage.getItem("userId"));
+    const role = JSON.parse(localStorage.getItem("role"));
 
     if (token && id && role) {
       setUser({
@@ -24,9 +24,9 @@ export const UserProvider = ({ children }) => {
 
   const login = (userData) => {
     setUser(userData);
-    localStorage.setItem("token", userData.token);
-    localStorage.setItem("role", userData.role);
-    localStorage.setItem("userId", userData.id);
+    localStorage.setItem("token", JSON.stringify(userData.token));
+    localStorage.setItem("role", JSON.stringify(userData.role));
+    localStorage.setItem("userId", JSON.stringify(userData.id));
   };
 
   const logout = () => {

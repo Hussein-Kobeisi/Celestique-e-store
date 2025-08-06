@@ -18,7 +18,7 @@ const NotificationsPage = () => {
 
   useEffect(() => {
     const token = JSON.parse(localStorage.getItem("token"));
-    const user = JSON.parse(localStorage.getItem("user"));
+    const userId = JSON.parse(localStorage.getItem("userId"));
 
     axios.get("http://127.0.0.1:8000/api/notifications_user", {
 
