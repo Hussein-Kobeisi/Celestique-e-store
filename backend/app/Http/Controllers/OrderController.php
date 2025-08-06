@@ -60,6 +60,7 @@ class OrderController extends Controller
         OrderService::sendConfirmationEmail($order);
         UserService::addUserTotalSpent($user, $order->total_amount);
         UserService::addUserItemsPurchased($user, count($orderItems));
+        OrderService::updateProductStock($orderItems);
 
         return $this->responseJson([
             'order' => $order,

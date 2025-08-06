@@ -26,14 +26,15 @@ class ProductQueryBuilder
 
         // Sorting by name or price
         $sort = $request->input('sort');
-        if ($sort) {
-            [$field, $direction] = explode('_', $sort) + [null, 'asc'];
-            $allowedFields = ['name', 'price'];
-            $allowedDirections = ['asc', 'desc'];
+        $allowedSorts = [
+            'price_asc'  => ['price', 'asc'],
+            'price_desc' => ['price', 'desc'],
+            'name_asc'   => ['name', 'asc'],
+        ];
 
-            if (in_array($field, $allowedFields) && in_array($direction, $allowedDirections)) {
-                $query->orderBy($field, $direction);
-            }
+        if ($sort && isset($allowedSorts[$sort])) {
+            [$field, $direction] = $allowedSorts[$sort];
+            $query->orderBy($field, $direction);
         } else {
             // Default sort
             $query->orderBy('created_at', 'desc');

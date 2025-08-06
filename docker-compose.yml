@@ -27,7 +27,7 @@ services:
   backend:
     build:
       context: ./backend
-      dockerfile: DockerFile
+      dockerfile: Dockerfile
     container_name: laravel
     depends_on:
       - mysql
@@ -45,18 +45,19 @@ services:
       DB_PASSWORD: team4secret
       REDIS_HOST: redis
       REDIS_PORT: 6379
+    # command: php artisan queue:work
     networks:
       - app-network
 
   frontend:
     build:
       context: ./frontend
-      dockerfile: DockerFile
+      dockerfile: Dockerfile
     container_name: react
     depends_on:
       - backend
     ports:
-      - "3000:80"
+      - "3000:3000"
     networks:
       - app-network
 

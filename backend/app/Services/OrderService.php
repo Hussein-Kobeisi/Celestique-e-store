@@ -58,4 +58,11 @@ class OrderService
     {
         Mail::to($order->user->email)->send(new UpdateOrderStatusMail($order));
     }
+
+     static function updateProductStock($orderItems)
+    {
+        foreach ($orderItems as $item) {
+            ProductService::tryDecreaseStock($item['product_id'], $item['quantity']);
+        }
+    }
 }

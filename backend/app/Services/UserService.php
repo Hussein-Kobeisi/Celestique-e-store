@@ -11,6 +11,10 @@ class UserService
         return Auth::user();
     }
 
+    static function find($id){
+        return User::find($id);
+    }
+
     static function getFillableData($request){
         $fillable = (new User)->getFillable();
         return $request->only($fillable);
@@ -31,12 +35,12 @@ class UserService
     }
 
     static function addUserTotalSpent($user, $amount){
-        $user->total_spent += $amount;
+        $user->total_money_spent += $amount;
         $user->save();
     }
 
     static function addUserItemsPurchased($user, $itemsCount){
-        $user->items_purchased += $itemsCount;
+        $user->total_orders += $itemsCount;
         $user->save();
     }
 

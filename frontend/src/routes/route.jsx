@@ -9,6 +9,9 @@ import { UserProvider } from "../components/Context/userContext";
 import ViewProduct from "../Pages/ViewProduct";
 import AIAssistant from "../Pages/AiPage";
 
+import ProductsListing from "../Pages/AdminDashboard";
+import CelestialCollection from "../Pages/LandingPage";
+
 const MyRoutes = () => {
   return (
     <UserProvider>
@@ -23,6 +26,10 @@ const MyRoutes = () => {
       
       <Route path="/ai" element={<AIAssistant/>} />
 
+
+      {/* <Route path="/viewproduct/:productId" element={<ViewProduct />} /> */}
+      <Route path="/admindashboard" element={<ProductsListing/>} />
+      <Route path="/" element={<CelestialCollection/>} />
     </Routes>
     </UserProvider>
 

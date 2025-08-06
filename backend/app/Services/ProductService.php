@@ -13,10 +13,6 @@ class ProductService
     {
         return Product::find($id);
     }
-    static function find($id)
-    {
-        return Product::find($id);
-    }
 
     static function add($data)
     {
@@ -44,7 +40,7 @@ class ProductService
 
     static function getFilteredProducts(ProductFilterRequest $request)
     {
-        return ProductQueryBuilder::build($request)->paginate(15);
+        return ProductQueryBuilder::build($request)->paginate(8);
     }
 
     static function tryDecreaseStock($productId, $quantity)

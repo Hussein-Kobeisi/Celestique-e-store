@@ -5,11 +5,12 @@ import ProductCard from "../../components/ProductCard";
 import { getProductsApi } from "../../apis/apis";
 import Navbar from "../../components/Shared/Usernavbar";
 import { useUser } from "../../components/Context/userContext";
-import { Navigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 const placeholderImage = "https://via.placeholder.com/150";
 
 const Products = () => {
+  const navigate = useNavigate()
   const { user } = useUser();
   const [products, setProducts] = useState([]);
   const [search, setSearch] = useState("");
@@ -31,6 +32,7 @@ const Products = () => {
   //       const response = await axios.get('http://localhost:8000/api/products', {
   //         headers: {
   //           Authorization: ⁠ Bearer ${user?.token} ⁠,
+  //           Authorization: `Bearer ${user?.token}`,
   //         },
   //       });
 
@@ -148,7 +150,7 @@ const Products = () => {
         <div className="product-grid">
           {products.length > 0 ? (
             products.map((product) => (
-              <ProductCard key={product.id} product={product} />
+              <ProductCard key={product.id} product={product} onClick={() => navigate('/viewproduct?productId='+product.id)}/>
             ))
           ) : (
             !error && <div className="no-products">No products available.</div>

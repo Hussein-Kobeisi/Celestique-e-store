@@ -1,13 +1,14 @@
 import "./index.css";
-import { Bell, User, Plus, Minus, ShoppingCart } from 'lucide-react';
+import {Plus, Minus, ShoppingCart } from 'lucide-react';
 import { useViewProductLogic } from './logic';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useSearchParams  } from 'react-router-dom';
+import { useEffect } from "react";
 import Navbar from "../../components/Shared/Usernavbar";
 
 const ViewProduct = () => {
-  const navigate = useNavigate();
-  const { productId } = useParams();
-
+  const [searchParams] = useSearchParams();
+  const productId = searchParams.get('productId');
+  
   const {
     product,
     quantity,
@@ -24,7 +25,7 @@ const ViewProduct = () => {
 
     <Navbar activeLink="Products" />
 
-      <main className="vp-main-content">
+ {     <main className="vp-main-content">
         <div className="vp-product-card">
           {successMessage && (
             <div className="vp-success-message">
@@ -39,21 +40,13 @@ const ViewProduct = () => {
 
           <div className="vp-product-container">
 
-            <div className="vp-product-image-section">
-              <img
-                src={product?.image || '/api/placeholder/500/500'}
-                alt={product?.name || 'Product'}
-                className="vp-product-image"
-                onError={(e) => {
-                  e.target.src = '/api/placeholder/500/500';
-                }}
-              />
-              <div className="vp-product-badge">
-                N
-              </div>
-            </div>
 
+            <img 
+                className="vp-product-image" 
+                src={product?.image_url || "https://i.pinimg.com/736x/51/4f/1a/514f1a898204387d34e0d67197e9bb09.jpg"} 
+              />
             <div className="vp-product-details">
+              
               <h1 className="vp-product-title">
                 {product?.name || 'Lotus Ring Gold Earrings (18KT)'}
               </h1>
@@ -119,7 +112,7 @@ const ViewProduct = () => {
             </div>
           </div>
         </div>
-      </main>
+      </main>}
     </div>
   );
 };
