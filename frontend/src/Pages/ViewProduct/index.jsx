@@ -39,7 +39,7 @@ const ViewProduct = () => {
 
           <div className="vp-product-container">
 
-            <div className="vp-product-image-section">
+{/*             <div className="vp-product-image-section">
               <img
                 src={product?.image || '/api/placeholder/500/500'}
                 alt={product?.name || 'Product'}
@@ -51,7 +51,7 @@ const ViewProduct = () => {
               <div className="vp-product-badge">
                 N
               </div>
-            </div>
+            </div> */}
 
             <div className="vp-product-details">
               <h1 className="vp-product-title">

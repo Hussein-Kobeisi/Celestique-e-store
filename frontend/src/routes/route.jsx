@@ -6,6 +6,7 @@ import CartPage from "../Pages/CartPage";
 import Profile from "../Pages/Profile"; 
 import AddProduct from "../Pages/AddProduct"; 
 import ViewProduct from "../Pages/ViewProduct";
+import LandingPage from "../Pages/LandingPage";
 
 const MyRoutes = () => {
   return (
@@ -17,6 +18,7 @@ const MyRoutes = () => {
       <Route path="/profile" element={<Profile/>} />
       <Route path="/addproduct" element={<AddProduct/>} />
       <Route path="/viewproduct" element={<ViewProduct/>} />
+      <Route path="/" element={<LandingPage/>} />
     </Routes>
   );
 };
