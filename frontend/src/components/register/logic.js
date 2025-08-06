@@ -1,6 +1,8 @@
 import { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useUser } from "../Context/userContext";
+
 
 export const useRegisterFormLogic = () => {
   const [email, setEmail] = useState("");
@@ -9,41 +11,47 @@ export const useRegisterFormLogic = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
+  const { login } = useUser();
+
 
   const handleSubmit = useCallback(async () => {
     setErrorMessage(""); 
-
+  
     const registrationData = {
-      username: username,
+      name: username,
       email: email,
       password: password,
-      phoneNumber: phoneNumber, 
+      mobile: phoneNumber,
+      role: 0 // normal user
     };
-
+  
     try {
-      const response = await axios.post("http://localhost:8000/api/v0.1/guest/register", registrationData);
-
+      const response = await axios.post("http://localhost:8000/api/register", registrationData);
+  
       const token = response.data.payload.token;
       const userID = response.data.payload.id;
-      const registeredUsername = response.data.payload.username; 
-
+      const registeredUsername = response.data.payload.name;
+  
       console.log("Registration successful!", response.data);
-
+  
       if (!token) {
         throw new Error("No token returned from server.");
       }
-
-      localStorage.setItem("token", token);
-      localStorage.setItem("userId", userID);
-      localStorage.setItem("username", registeredUsername); 
-
+  
+      login({
+        id: userID,
+        username: registeredUsername,
+        token: token,
+        role: "user"
+      });
+  
       navigate("/Dashboard");
     } catch (error) {
       const message = error.response?.data?.message || "Error during registration. Please check your inputs.";
       console.error(message, error);
       setErrorMessage(message);
     }
-  }, [email, password, username, phoneNumber, navigate]); 
+  }, [email, password, username, phoneNumber, navigate, login]);
 
   return {
     email, setEmail,

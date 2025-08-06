@@ -10,6 +10,7 @@ use App\Services\HourlyOrderService;
 use App\Services\DailyRevenueService;
 use App\Services\AuditLogService;
 use App\Http\Requests\AddOrderRequest;
+use App\Services\UserService;
 use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
@@ -22,7 +23,7 @@ class OrderController extends Controller
         return $this->responseJson($orders, "success", 200);
     }
 
-    public function getByUser(Request $request)
+    public function getByUser()
     {
         $orders = OrderService::getOrdersByAuthenticatedUser();
         return $this->responseJson($orders, "success", 200);
@@ -39,10 +40,7 @@ class OrderController extends Controller
             $request->order_id,
             $request->status
         );
-
-        if (!$order) {
-            return $this->responseJson(null, "Order not found", 404);
-        }
+        OrderService::sendUpdateStatusEmail($order);
 
         return $this->responseJson($order, "Order updated successfully", 200);
     }
@@ -59,7 +57,9 @@ class OrderController extends Controller
         $hourlyOrder = HourlyOrderService::addOrUpdateHourlyOrder(count($orderItems));
         $dailyRevenue = DailyRevenueService::addOrUpdateDailyRevenue($order->total_amount);
         $auditLog = AuditLogService::createOrderAuditLog($order);
-
+        OrderService::sendConfirmationEmail($order);
+        UserService::addUserTotalSpent($user, $order->total_amount);
+        UserService::addUserItemsPurchased($user, count($orderItems));
 
         return $this->responseJson([
             'order' => $order,
@@ -71,9 +71,7 @@ class OrderController extends Controller
         ], "Order created successfully", 201);
 
         // TODO: 
-        // - update user total_orders/total_spent
         // - live add to admin dashboard
         // - user sees live update of order status
-        // send email to user
     }
 }

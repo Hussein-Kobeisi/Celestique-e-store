@@ -1,27 +1,59 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./index.css";
-import goldenRingImage from "../../assets/Goldenrings.png";
 import ProductCard from "../../components/ProductCard";
+import { getProductsApi } from "../../apis/apis";
 import Navbar from "../../components/Shared/Usernavbar";
+import { useUser } from "../../components/Context/userContext";
+import { Navigate } from "react-router-dom";
 
-const dummyProducts = new Array(8).fill({
-  name: "HEXA GOLD RING",
-  description: "18k yellow gold",
-  price: "$450",
-  image: goldenRingImage,
-});
+const placeholderImage = "https://via.placeholder.com/150";
 
 const Products = () => {
-  const [products, setProducts] = useState(dummyProducts);
+  const { user } = useUser();
+  const [products, setProducts] = useState([]);
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("");
   const [sort, setSort] = useState("");
   const [error, setError] = useState(null);
   const [page, setpage] = useState(1);
 
-  // here fetching the products if there  is a filters or not . if there is a filter this request will be sent another time after the first request 
-  const fetchProducts = async (filters = {}) => {
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get('http://localhost:8000/api/products', {
+          headers: {
+            Authorization: `Bearer ${user?.token}`,
+          },
+        });
+
+        const data = response.data;
+
+        if (Array.isArray(data.payload)) {
+          // Map to add fallback image if image_url is null
+          const productsWithImages = data.payload.map((product) => ({
+            ...product,
+            image_url: product.image_url || placeholderImage,
+          }));
+
+          setProducts(productsWithImages);
+          setError(null);
+        } else {
+          setProducts([]);
+          setError("No products found.");
+        }
+      } catch (err) {
+        console.error("Error fetching products:", err);
+        setError("Could not load products.");
+      }
+    };
+
+    if (user?.token) {
+      fetchProducts();
+    }
+  }, [user?.token]);
+
+  const handleFilter = async () => {
     try {
       const response = await axios.get("http://127.0.0.1:8000/api/filtered_products?"
                                           +"page="+page
@@ -32,15 +64,21 @@ const Products = () => {
       console.log(response.data.payload.data);
       const data = response.data.payload.data;
 
-      if (data && Array.isArray(data) && data.length > 0) {
-        setProducts(data);
+      if (Array.isArray(data.payload)) {
+        const productsWithImages = data.payload.map((product) => ({
+          ...product,
+          image_url: product.image_url || placeholderImage,
+        }));
+
+        setProducts(productsWithImages);
+        setError(data.payload.length === 0 ? "No matching products found." : null);
       } else {
-        setProducts(dummyProducts);
+        setProducts([]);
+        setError("No matching products found.");
       }
     } catch (err) {
-      console.error("Error fetching products:", err);
-      setProducts(dummyProducts);
-      setError("Could not load products. Showing sample items.");
+      console.error("Error fetching filtered products:", err);
+      setError("Could not load filtered products.");
     }
   };
 
@@ -83,29 +121,23 @@ const Products = () => {
               <option value="Earring">Earrings</option>
             </select>
           </div>
+
+          <button className="filter-btn" onClick={handleFilter}>
+            Filter
+          </button>
         </div>
 
-        <div className="search-bar-container">
-          <input
-            type="text"
-            placeholder="Search..."
-            className="search-input"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
+        {error && <div className="error-message">{error}</div>}
+
+        <div className="product-grid">
+          {products.length > 0 ? (
+            products.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))
+          ) : (
+            !error && <div className="no-products">No products available.</div>
+          )}
         </div>
-
-        <button className="filter-btn" onClick={handleFilter}>
-          Filter
-        </button>
-      </div>
-
-      {error && <div className="error-message">{error}</div>}
-
-      <div className="product-grid">
-      {products.map((product, id) => (
-  <ProductCard key={id} product={product} />
-))}
       </div>
       <div className="products-page-footer">
         <button className="products-page-btn" onClick={() => setpage((prev) => Math.max(prev - 1, 1))}> &lt; Prev </button>
