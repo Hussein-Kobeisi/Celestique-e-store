@@ -14,7 +14,6 @@ export const useViewProductLogic = (productId) => {
 
   useEffect(() => {
     const fetchProduct = async () => {
-      console.log(productId)
       if (!productId) {
         setError('Product ID is required');
         setIsLoading(false);
@@ -25,19 +24,16 @@ export const useViewProductLogic = (productId) => {
         setIsLoading(true);
         setError(null);
 
-        const token = localStorage.getItem('token');
-        const headers = token ? { Authorization: `Bearer ${token}` } : {};
-
         const response = await axios.get(
           `http://localhost:8000/api/products/${productId}`,
-          { headers }
         );
 
-        if (response.data.success) {
-          setProduct(response.data.payload);
-        } else {
-          setError('Product not found');
-        }
+        // if (response.data.success) {
+        console.log(response.data.payload)
+        setProduct(response.data.payload);
+        // } else {
+        //   setError('Product not found');
+        // }
       } catch (err) {
         console.error('Error fetching product:', err);
         
@@ -65,76 +61,15 @@ export const useViewProductLogic = (productId) => {
     }
   }, [product?.stock, error, successMessage]);
 
-  const handleAddToCart = useCallback(async () => {
-    const token = localStorage.getItem('token');
-    const userId = localStorage.getItem('userId');
-
-    if (!token || !userId) {
-      setError('Please log in to add items to cart');
-      navigate('/auth');
-      return;
-    }
-
-    if (!product) {
-      setError('Product information is not available');
-      return;
-    }
-
-    setIsAddingToCart(true);
-    setError(null);
-    setSuccessMessage(null);
-
-    try {
-      const response = await axios.post(
-        'http://localhost:8000/api/v0.1/cart/add',
-        {
-          productId: product.id || productId,
-          quantity: quantity,
-          userId: userId,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-
-      if (response.data.success) {
-        setSuccessMessage(`${quantity} item(s) added to cart successfully!`);
-        
-        if (response.data.updatedStock !== undefined) {
-          setProduct(prev => ({
-            ...prev,
-            stock: response.data.updatedStock
-          }));
-        }
-
-        setQuantity(1);
-
-        setTimeout(() => {
-          setSuccessMessage(null);
-        }, 3000);
-      }
-    } catch (err) {
-      console.error('Add to cart error:', err);
-      
-      if (err.response?.status === 401) {
-        setError('Session expired. Please log in again.');
-        navigate('/auth');
-      } else if (err.response?.status === 400) {
-        setError(err.response.data?.message || 'Invalid request. Please check the quantity.');
-      } else if (err.response?.status === 409) {
-        setError('This item is out of stock or insufficient quantity available.');
-      } else if (err.response?.data?.message) {
-        setError(err.response.data.message);
-      } else {
-        setError('Failed to add item to cart. Please try again.');
-      }
-    } finally {
-      setIsAddingToCart(false);
-    }
-  }, [product, productId, quantity, navigate]);
+  const handleAddToCart = () => {
+    let cart = JSON.parse(localStorage.getItem("cart")) || []
+    const existingProduct = cart.find(item => item.productId === productId);
+    if (existingProduct)
+      existingProduct.quantity += quantity;
+    else 
+      cart.push({ productId, quantity});
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }
 
   useEffect(() => {
     if (error || successMessage) {
