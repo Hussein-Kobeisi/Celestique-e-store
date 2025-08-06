@@ -30,7 +30,7 @@
   }
   .header-meta {
     display: flex;
-    gap: 6rem; /* or adjust to space between Type, Time, Status */
+    gap: 6rem; 
   }
   
   .notifications-header {

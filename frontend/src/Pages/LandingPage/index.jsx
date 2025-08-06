@@ -1,11 +1,9 @@
 import './index.css';
-import Navbar from '../../components/Shared/Usernavbar';
 import { useNavigate } from 'react-router-dom';
 
 const CelestialCollection = () => {
   const navigate = useNavigate();
   return (
-    <><Navbar activeLink="Products" />
     <div className="celestial-container">
       <div className="content-wrapper">
         <div className="left-section">
@@ -45,7 +43,6 @@ const CelestialCollection = () => {
         </div>
       </div>
     </div>
-    </>
   );
 };
 
