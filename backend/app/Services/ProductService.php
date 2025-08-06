@@ -13,10 +13,6 @@ class ProductService
     {
         return Product::find($id);
     }
-    static function find($id)
-    {
-        return Product::find($id);
-    }
 
     static function add($data)
     {
