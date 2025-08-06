@@ -24,6 +24,14 @@ class UserController extends Controller
         
     }
 
+    public function getUserById($id){
+        $user = UserService::find($id);
+        if (!$user) {
+            return $this->responseJSON(null, "User not found", 404);
+        }
+        return $this->responseJSON($user, "User fetched successfully", 200);
+    }
+
     public function delete()
     {
         $user = UserService::getUser();

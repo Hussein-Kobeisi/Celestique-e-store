@@ -11,6 +11,10 @@ class UserService
         return Auth::user();
     }
 
+    static function find($id){
+        return User::find($id);
+    }
+
     static function getFillableData($request){
         $fillable = (new User)->getFillable();
         return $request->only($fillable);

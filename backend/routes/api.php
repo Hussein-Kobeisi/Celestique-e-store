@@ -30,6 +30,9 @@ Route::group(['middleware' => 'auth:api'], function () {
 
         Route::controller(OrderController::class)->group(function () {
             Route::get('/orders_all', 'all');
+            Route::post('/update_order', 'update');
+            Route::post('/add_order', 'add');
+            Route::get('/orders_user', 'getByUser');
         });
 
         Route::controller(DailyRevenueController::class)->group(function () {
@@ -40,12 +43,13 @@ Route::group(['middleware' => 'auth:api'], function () {
             Route::get('/hourly_orders_today', 'getToday');
         });
 
-        Route::controller(OrderController::class)->group(function () {
-            Route::post('/update_order', 'update');
+
+        Route::controller(UserController::class)->group(function () {
+            Route::post('/update_user',         'update');
+            Route::post('/delete_user',         'delete');
+            Route::post('/user/{id}',         'getUserById');
         });
     });
-
-    
 
     Route::controller(ProductController::class)->group(function () {
         Route::get('/filtered_products', 'getFilteredProducts');
@@ -56,34 +60,19 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::post('refresh', 'refresh');
     });
 
-    Route::controller(UserController::class)->group(function () {
-        Route::post('/update_user',         'update');
-        Route::post('/delete_user',         'delete');
-    });
-
-    Route::controller(OrderController::class)->group(function () {
-        Route::post('/add_order', 'add');
-        Route::get('/orders_user', 'getByUser');
-    });
-
     Route::controller(NotificationController::class)->group(function () {
         Route::get('/notifications_user', 'getByUser');
     });
 });
 
 Route::controller(ProductController::class)->group(function () {
-        Route::get('/products', 'all');
-    });
-
-Route::controller(ProductController::class)->group(function () {
-        Route::get('/products/{id}', 'getProductById');
-    });
+    Route::get('/products', 'all');
+    Route::get('/products/{id}', 'getProductById');
+});
 
 Route::group(['prefix' => ''], function () {
     Route::controller(AuthController::class)->group(function () {
         Route::post('login', 'login');
         Route::post('register', 'register');
     });
-    
-
 });
