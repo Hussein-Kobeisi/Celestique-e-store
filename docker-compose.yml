@@ -15,23 +15,23 @@ services:
     networks:
       - app-network
 
-  redis:
-    image: redis:alpine
-    container_name: redis
-    restart: unless-stopped
-    ports:
-      - "6379:6379"
-    networks:
-      - app-network
+  # redis:
+  #   image: redis:alpine
+  #   container_name: redis
+  #   restart: unless-stopped
+  #   ports:
+  #     - "6379:6379"
+  #   networks:
+  #     - app-network
 
   backend:
     build:
       context: ./backend
-      dockerfile: DockerFile
+      dockerfile: Dockerfile
     container_name: laravel
     depends_on:
       - mysql
-      - redis
+      # - redis
     ports:
       - "8000:80"
     volumes:
@@ -51,12 +51,12 @@ services:
   frontend:
     build:
       context: ./frontend
-      dockerfile: DockerFile
+      dockerfile: Dockerfile
     container_name: react
     depends_on:
       - backend
     ports:
-      - "3000:80"
+      - "3000:3000"
     networks:
       - app-network
 

@@ -15,7 +15,7 @@ class ProductFilterRequest extends FormRequest
     {
         return [
             'search'   => ['nullable', 'string', 'max:255'],
-            'category' => ['nullable', 'in:ring,bracelet,earring,necklace'],
+            'category' => ['nullable'],
             'sort'     => ['nullable', 'regex:/^(name|price)_(asc|desc)$/i'],
             'page'     => ['nullable', 'integer', 'min:1'],
         ];
