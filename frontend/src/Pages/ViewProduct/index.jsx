@@ -2,12 +2,13 @@ import "./index.css";
 import {Plus, Minus, ShoppingCart } from 'lucide-react';
 import { useViewProductLogic } from './logic';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect } from "react";
 import Navbar from "../../components/Shared/Usernavbar";
 
 const ViewProduct = () => {
   const navigate = useNavigate();
   const { productId } = useParams();
-
+  
   const {
     product,
     quantity,

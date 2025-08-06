@@ -14,6 +14,7 @@ export const useViewProductLogic = (productId) => {
 
   useEffect(() => {
     const fetchProduct = async () => {
+      console.log(productId)
       if (!productId) {
         setError('Product ID is required');
         setIsLoading(false);
@@ -28,7 +29,7 @@ export const useViewProductLogic = (productId) => {
         const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
         const response = await axios.get(
-          `http://localhost:8000/api/v0.1/products/${productId}`,
+          `http://localhost:8000/api/products/${productId}`,
           { headers }
         );
 
