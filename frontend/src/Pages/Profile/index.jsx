@@ -126,7 +126,6 @@ const Profile = () => {
                   </button>
                 </div>
               </form>
-
                 <button 
                   type="button" 
                   className="pf-btn-danger"
