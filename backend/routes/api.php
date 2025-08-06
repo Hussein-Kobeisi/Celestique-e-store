@@ -45,9 +45,7 @@ Route::group(['middleware' => 'auth:api'], function () {
         });
     });
 
-    Route::controller(ProductController::class)->group(function () {
-        Route::get('/products', 'all');
-    });
+    
 
     Route::controller(ProductController::class)->group(function () {
         Route::get('/filtered_products', 'getFilteredProducts');
@@ -73,9 +71,22 @@ Route::group(['middleware' => 'auth:api'], function () {
     });
 });
 
+Route::controller(ProductController::class)->group(function () {
+        Route::get('/products', 'all');
+    });
+
+Route::controller(ProductController::class)->group(function () {
+        Route::get('/products/{id}', 'getProductById');
+    });
+
 Route::group(['prefix' => ''], function () {
     Route::controller(AuthController::class)->group(function () {
         Route::post('login', 'login');
         Route::post('register', 'register');
     });
+    
+
+});
+Route::get('/test', function () {
+    return response()->json(['status' => 'API is working']);
 });

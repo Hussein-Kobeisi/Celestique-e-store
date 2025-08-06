@@ -17,6 +17,17 @@ class ProductController extends Controller
         return $this->responseJson($product, "Product added successfully", 200);
     }
 
+    public function getProductById($id)
+    {
+        $product = ProductService::get($id);
+
+        if (!$product) {
+            return $this->responseJson(null, "Product not found", 404);
+        }
+
+        return $this->responseJson($product, "Product fetched successfully", 200);
+    }
+
     public function update(UpdateProductRequest $request)
     {
         $request = $request->validated();
