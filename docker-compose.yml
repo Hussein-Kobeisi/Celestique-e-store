@@ -31,7 +31,7 @@ services:
     container_name: laravel
     depends_on:
       - mysql
-      # - redis
+      - redis
     ports:
       - "8000:80"
     volumes:
@@ -45,6 +45,7 @@ services:
       DB_PASSWORD: team4secret
       REDIS_HOST: redis
       REDIS_PORT: 6379
+    # command: php artisan queue:work
     networks:
       - app-network
 

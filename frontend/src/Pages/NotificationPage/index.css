@@ -49,4 +49,14 @@
     padding-top: 8dvh;
   }
 
-
+  .no-notifications-div{
+    display: flex;
+    flex-direction: column;
+    color: grey;
+    font-weight: 100;
+    font-size: large;
+    height: 60dvh;
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
