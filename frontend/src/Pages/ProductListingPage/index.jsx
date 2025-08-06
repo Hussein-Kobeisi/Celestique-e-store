@@ -53,35 +53,6 @@ const Products = () => {
     }
   }, [user?.token]);
 
-  const handleFilter = async () => {
-    try {
-      const response = await axios.get("http://127.0.0.1:8000/api/filtered_products?"
-                                          +"page="+page
-                                          +"&category="+(filters.category??'')
-                                          +"&sort="+(filters.sort??'')
-                                          +"&search="+(filters.search??''));
-
-      console.log(response.data.payload.data);
-      const data = response.data.payload.data;
-
-      if (Array.isArray(data.payload)) {
-        const productsWithImages = data.payload.map((product) => ({
-          ...product,
-          image_url: product.image_url || placeholderImage,
-        }));
-
-        setProducts(productsWithImages);
-        setError(data.payload.length === 0 ? "No matching products found." : null);
-      } else {
-        setProducts([]);
-        setError("No matching products found.");
-      }
-    } catch (err) {
-      console.error("Error fetching filtered products:", err);
-      setError("Could not load filtered products.");
-    }
-  };
-
   //this is initial fetch , no filters here . 
   useEffect(() => {
     fetchProducts();
