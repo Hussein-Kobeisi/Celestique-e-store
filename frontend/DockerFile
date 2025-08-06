@@ -1,41 +1,14 @@
-# FROM node:20-alpine AS build
-
-# WORKDIR /app
-
-# #copy package.json to get dependencies
-# COPY package*.json ./
-# RUN npm install
-
-# COPY . .
-# RUN npm run build
-
-
-# FROM nginx:alpine
-# RUN rm -rf /usr/share/nginx/html/*
-# COPY --from=build /app/build /usr/share/nginx/html
-
-# EXPOSE 80
-
-# CMD ["nginx", "-g", "daemon off;"]
-
-
-# Use the latest LTS version of Node.js
+# copy main image from alpine
 FROM node:18-alpine
+ WORKDIR /app
  
-# Set the working directory inside the container
-WORKDIR /app
- 
-# Copy package.json and package-lock.json
+# copy packagejson and install dependencies
 COPY package*.json ./
+ RUN npm install
  
-# Install dependencies
-RUN npm install
- 
-# Copy the rest of your application files
+# copy everything from Frontend
 COPY . .
  
-# Expose the port your app runs on
 EXPOSE 3000
  
-# Define the command to run your app
 CMD ["npm", "start"]
