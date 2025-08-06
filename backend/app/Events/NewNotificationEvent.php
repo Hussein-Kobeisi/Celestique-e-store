@@ -28,6 +28,6 @@ class NewNotificationEvent implements ShouldBroadcast
 
     public function broadcastAs()
     {
-        return 'notification.sent';
+        return 'NotificationSent';
     }
 }

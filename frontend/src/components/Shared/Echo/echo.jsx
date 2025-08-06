@@ -10,11 +10,12 @@ const echo = new Echo({
   key: 'fbf9a02e4e1aaa1ce63a',
   cluster: 'ap1',
   forceTLS: true,
+  authEndpoint: 'http://localhost:8000/broadcasting/auth',
   auth: {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  },
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+    }
 });
 
 export default echo;

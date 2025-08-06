@@ -12,6 +12,9 @@ use App\Http\Controllers\HourlyOrderController;
 
 use App\Events\NewNotificationEvent;
 
+Broadcast::routes(['middleware' => ['auth:api']]);
+
+
 Route::group(['middleware' => 'auth:api'], function () {
 
     Route::get('/test-notification', function () {

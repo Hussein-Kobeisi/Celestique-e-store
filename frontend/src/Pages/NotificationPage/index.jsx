@@ -31,10 +31,9 @@ const NotificationsPage = () => {
 
 
       const channel = echo.private(`notifications.${1}`)
-        .listen("NotificationSent", (event) => {
-          // setNotifications((prev) => [event.notification, ...prev]);
-          console.log('New NOTOFICATION!!!');
-        });
+    .listen('.notification.sent', (event) => {
+        console.log('New NOTIFICATION!!!', event);
+    });
 
       return () => {echo.leave(`notifications.${1}`)};
 
