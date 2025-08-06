@@ -2,6 +2,7 @@ import { Diamond, Bell, User } from "lucide-react";
 import { useState } from "react";
 import './index.css';
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Navbar = ({ activeLink }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -21,15 +22,10 @@ const Navbar = ({ activeLink }) => {
           </h1>
         </a>
 
-        <nav className="celestique-nav">
-          <a 
-            href="#" 
-            className={`celestique-nav-link ${
-              activeLink === 'Products' ? 'active' : ''
-            }`}
-          >
-            Products
-          </a>
+        <nav className="celestique-nav"> 
+        <Link className="celestique-nav-link" to="/products">
+  Products
+</Link>
           <a 
             href="#" 
             className={`celestique-nav-link ${

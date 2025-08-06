@@ -9,6 +9,10 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\DailyRevenueController;
 use App\Http\Controllers\HourlyOrderController;
+// use App\Http\Controllers\AIController;
+// use App\Http\Controllers\ProductSearchController;
+use App\Http\Controllers\ProductSearchController; // Import your ProductSearchController
+
 
 use App\Events\NewNotificationEvent;
 
@@ -84,7 +88,10 @@ Route::group(['prefix' => ''], function () {
     Route::controller(AuthController::class)->group(function () {
         Route::post('login', 'login');
         Route::post('register', 'register');
+        
     });
+
+Route::post('/products/search', [ProductSearchController::class, 'search']);
 
     Route::controller(ProductController::class)->group(function () {
         Route::get('/products', 'all');
