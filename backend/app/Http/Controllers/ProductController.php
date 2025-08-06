@@ -6,6 +6,7 @@ use App\Services\ProductService;
 use App\Http\Requests\AddProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Http\Requests\ProductFilterRequest;
+use Illuminate\Support\Facades\Cache;
 
 class ProductController extends Controller
 {
@@ -49,8 +50,18 @@ class ProductController extends Controller
     }
 
     public function getFilteredProducts(ProductFilterRequest $request)
-    {
-        $products = ProductService::getFilteredProducts($request);
-        return $this->responseJson($products, "Products fetched successfully", 200);
-    }
+{
+    $validated = $request->validated();
+    $page = $request->input('page', 1);
+
+    // Unique cache key based on validated input and page
+    $cacheKey = 'filtered_products_' . md5(json_encode($validated)) . "_page_{$page}";
+
+    $products = Cache::remember($cacheKey, now()->addMinutes(10), function () use ($request) {
+        dd('Querying DB...');
+        return ProductService::getFilteredProducts($request);
+    });
+
+    return $this->responseJson($products, "Products fetched successfully", 200);
+}
 }
