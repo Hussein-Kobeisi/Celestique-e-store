@@ -16,9 +16,12 @@ class AuthController extends Controller{
     }
 
     public function register(Request $request){
-        $user = AuthService::register($request);
-        if($user)
-            return $this->responseJSON($user);
-        return $this->responseJSON(null, "error", 401);
+        try{
+            $user = AuthService::register($request);
+        }catch(\Exception $e){
+            return $this->errorJSON($e->getMessage(), 500);
+        }
+
+        return $this->responseJSON($user);
     }
 }

@@ -58,7 +58,6 @@ const Profile = () => {
           <div className="pf-content-card">
             <div className="pf-card-header">
               <h2 className="pf-card-title">Edit Information</h2>
-              <p className="pf-card-subtitle">Customize your luxury experience</p>
             </div>
             <div className="pf-card-content">
               {successMessage && (

@@ -1,0 +1,52 @@
+
+.notifications-container {
+    padding: 2rem;
+    border-radius: 15px;
+    background-color: #ffffff;
+    width: 90%;
+    
+    margin: auto;
+    max-width: 900px;
+  }
+  
+  .notifications-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    border-bottom: 1px solid #ddd;
+    padding: 1rem;
+  }
+  .header-message {
+    flex: 1;
+    margin-right: 1rem;
+  }
+  
+  .notification-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    font-size: 0.95rem;
+  }
+  .header-meta {
+    display: flex;
+    gap: 6rem; /* or adjust to space between Type, Time, Status */
+  }
+  
+  .notifications-header {
+    font-weight: bold;
+    border-bottom: 1px solid #ddd;
+  }
+  .notifications-header-titles{
+    justify-items: end;
+    justify-content: space-between;
+
+  }
+
+  .notifications-page {
+    background-color: #dccdbe;
+    min-height: 100dvh;
+    padding-top: 8dvh;
+  }
+
+

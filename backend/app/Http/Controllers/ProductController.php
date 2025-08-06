@@ -2,23 +2,55 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Services\ProductService;
+use App\Http\Requests\AddProductRequest;
+use App\Http\Requests\UpdateProductRequest;
+use App\Http\Requests\ProductFilterRequest;
 
 class ProductController extends Controller
 {
-    static function addOrUpdate(Request $request)
+    public function add(AddProductRequest $request)
     {
-        //Create new product as admin
+        $validated = $request->validated();
+        $productData = ProductService::productWithImage($validated);
+        $product = ProductService::add($productData);
+        return $this->responseJson($product, "Product added successfully", 200);
     }
 
-    static function update(Request $request)
+    public function getProductById($id)
     {
-        //Update existing product as admin (used for updating stock + when order is created)
+        $product = ProductService::get($id);
+
+        if (!$product) {
+            return $this->responseJson(null, "Product not found", 404);
+        }
+
+        return $this->responseJson($product, "Product fetched successfully", 200);
+    }
+
+    public function update(UpdateProductRequest $request)
+    {
+        $request = $request->validated();
+        $product = ProductService::get($request['id']);
+
+        $product = ProductService::fill($product, $request);
+        ProductService::save($product);
+
+        return $this->responseJson($product, "Product updated successfully", 200);
+
+        // TODO:
         //notify listing page listener that product was updated
     }
 
-    static function all()
+    public function all()
     {
-        //Get all products
+        $payload = ProductService::all();
+        return $this->responseJson($payload, "Products retrieved successfully", 200);
+    }
+
+    public function getFilteredProducts(ProductFilterRequest $request)
+    {
+        $products = ProductService::getFilteredProducts($request);
+        return $this->responseJson($products, "Products fetched successfully", 200);
     }
 }

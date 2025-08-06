@@ -6,10 +6,8 @@ use Illuminate\Http\Request;
 
 class AuditLogController extends Controller
 {
-    static function addOrUpdate(Request $request)
+    public function addOrUpdate(Request $request)
     {
-        // called on by OrderController when admin changes order status
-        // add a log that admin changed order status
-        // alert user listener that order status was changed (to live update orders page)
+        
     }
 }

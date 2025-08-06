@@ -4,15 +4,18 @@ namespace App\Services;
 
 use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Mail;
+use App\Mail\OrderConfirmationMail;
+use App\Mail\UpdateOrderStatusMail;
 class OrderService
 {
-    public function getAllOrders()
+    static function getAllOrders()
     {
-        return Order::orderBy('created_at', 'desc')->get();
+        $orders = Order::orderBy('created_at', 'desc')->get();
+        return $orders;
     }
 
-    public function getOrdersByAuthenticatedUser()
+    static function getOrdersByAuthenticatedUser()
     {
         $user = Auth::user();
 
@@ -22,7 +25,7 @@ class OrderService
             ->get();
     }
 
-    public function updateOrderStatus($orderId, $status)
+    static function updateOrderStatus($orderId, $status)
     {
         $order = Order::find($orderId);
 
@@ -34,5 +37,25 @@ class OrderService
         $order->save();
 
         return $order;
+    }
+
+    static function addOrder($total_amount, $userId)
+    {
+        $order = new Order;
+        $order->total_amount = $total_amount;
+        $order->user_id = $userId;
+        $order->status = 'pending';
+        $order->save();
+        return $order;
+    }
+
+    static function sendConfirmationEmail($order)
+    {
+        Mail::to($order->user->email)->send(new OrderConfirmationMail($order));
+    }
+
+    static function sendUpdateStatusEmail($order)
+    {
+        Mail::to($order->user->email)->send(new UpdateOrderStatusMail($order));
     }
 }

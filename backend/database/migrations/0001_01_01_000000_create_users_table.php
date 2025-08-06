@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('mobile')->nullable();
             $table->string('password');
-            $table->string('mobile');
             $table->tinyInteger('role')->default(0);
             $table->integer('total_orders')->default(0);
             $table->integer('total_money_spent')->default(0);

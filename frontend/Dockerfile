@@ -1,0 +1,14 @@
+# copy main image from alpine
+FROM node:18-alpine
+ WORKDIR /app
+ 
+# copy packagejson and install dependencies
+COPY package*.json ./
+ RUN npm install
+ 
+# copy everything from Frontend
+COPY . .
+ 
+EXPOSE 3000
+ 
+CMD ["npm", "start"]

@@ -1,9 +1,11 @@
 import { Diamond, Bell, User } from "lucide-react";
 import { useState } from "react";
 import './index.css';
+import { useNavigate } from "react-router-dom";
 
 const Navbar = ({ activeLink }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -44,7 +46,7 @@ const Navbar = ({ activeLink }) => {
             <Bell />
           </button>
           
-          <button className="celestique-icon-btn">
+          <button  onClick={() => navigate('/profile')} className="celestique-icon-btn">
             <User />
           </button>
 
