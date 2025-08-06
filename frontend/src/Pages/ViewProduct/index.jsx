@@ -1,5 +1,5 @@
 import "./index.css";
-import { Bell, User, Plus, Minus, ShoppingCart } from 'lucide-react';
+import {Plus, Minus, ShoppingCart } from 'lucide-react';
 import { useViewProductLogic } from './logic';
 import { useNavigate, useParams } from 'react-router-dom';
 import Navbar from "../../components/Shared/Usernavbar";
@@ -24,7 +24,7 @@ const ViewProduct = () => {
 
     <Navbar activeLink="Products" />
 
-      <main className="vp-main-content">
+ {     <main className="vp-main-content">
         <div className="vp-product-card">
           {successMessage && (
             <div className="vp-success-message">
@@ -39,19 +39,7 @@ const ViewProduct = () => {
 
           <div className="vp-product-container">
 
-{/*             <div className="vp-product-image-section">
-              <img
-                src={product?.image || '/api/placeholder/500/500'}
-                alt={product?.name || 'Product'}
-                className="vp-product-image"
-                onError={(e) => {
-                  e.target.src = '/api/placeholder/500/500';
-                }}
-              />
-              <div className="vp-product-badge">
-                N
-              </div>
-            </div> */}
+
 
             <div className="vp-product-details">
               <h1 className="vp-product-title">
@@ -119,7 +107,7 @@ const ViewProduct = () => {
             </div>
           </div>
         </div>
-      </main>
+      </main>}
     </div>
   );
 };
