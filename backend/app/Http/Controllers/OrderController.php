@@ -5,12 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\OrderService;
 use App\Services\OrderItemService;
-use App\Services\NotificationService;
-use App\Services\HourlyOrderService;
-use App\Services\DailyRevenueService;
-use App\Services\AuditLogService;
 use App\Http\Requests\AddOrderRequest;
-use App\Services\UserService;
 use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
@@ -53,21 +48,12 @@ class OrderController extends Controller
 
         $order = OrderService::addOrder($request['total_amount'], $user->id);
         $orderItems = OrderItemService::addItems($request['order_items'], $order->id);
-        $notification = NotificationService::createCheckoutNotification($order);
-        $hourlyOrder = HourlyOrderService::addOrUpdateHourlyOrder(count($orderItems));
-        $dailyRevenue = DailyRevenueService::addOrUpdateDailyRevenue($order->total_amount);
-        $auditLog = AuditLogService::createOrderAuditLog($order);
-        OrderService::sendConfirmationEmail($order);
-        UserService::addUserTotalSpent($user, $order->total_amount);
-        UserService::addUserItemsPurchased($user, count($orderItems));
+
+        OrderService::handlePostOrderCreation($order, $user, count($orderItems));
 
         return $this->responseJson([
             'order' => $order,
             'order_items' => $orderItems,
-            'notification' => $notification,
-            'hourly_order' => $hourlyOrder,
-            'daily_revenue' => $dailyRevenue,
-            'audit_log' => $auditLog
         ], "Order created successfully", 201);
 
         // TODO: 
