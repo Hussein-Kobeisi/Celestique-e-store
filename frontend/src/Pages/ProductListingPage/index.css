@@ -83,6 +83,7 @@
     flex-wrap: wrap;
     gap: 24px;
     justify-content: flex-start;
+    padding-top: 3em;
   }
   
   .product-card {

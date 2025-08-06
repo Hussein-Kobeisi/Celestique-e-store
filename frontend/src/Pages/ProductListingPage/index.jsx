@@ -17,54 +17,91 @@ const Products = () => {
   const [sort, setSort] = useState("");
   const [error, setError] = useState(null);
   const [page, setpage] = useState(1);
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await axios.get('http://localhost:8000/api/products', {
-          headers: {
-            Authorization: `Bearer ${user?.token}`,
-          },
-        });
-
-        const data = response.data;
-
-        if (Array.isArray(data.payload)) {
-          // Map to add fallback image if image_url is null
-          const productsWithImages = data.payload.map((product) => ({
-            ...product,
-            image_url: product.image_url || placeholderImage,
-          }));
-
-          setProducts(productsWithImages);
-          setError(null);
-        } else {
-          setProducts([]);
-          setError("No products found.");
-        }
-      } catch (err) {
-        console.error("Error fetching products:", err);
-        setError("Could not load products.");
-      }
-    };
-
-    if (user?.token) {
-      fetchProducts();
+  const [filters, setFilters] = useState(
+    {
+      search: "",
+      category:"",
+      sort:"",
     }
-  }, [user?.token]);
+  );
+
+  // useEffect(() => {
+  //   const fetchProducts = async () => {
+  //     try {
+  //       const response = await axios.get('http://localhost:8000/api/products', {
+  //         headers: {
+  //           Authorization: `Bearer ${user?.token}`,
+  //         },
+  //       });
+
+  //       const data = response.data;
+
+  //       if (Array.isArray(data.payload)) {
+  //         // Map to add fallback image if image_url is null
+  //         const productsWithImages = data.payload.map((product) => ({
+  //           ...product,
+  //           image_url: product.image_url || placeholderImage,
+  //         }));
+
+  //         setProducts(productsWithImages);
+  //         setError(null);
+  //       } else {
+  //         setProducts([]);
+  //         setError("No products found.");
+  //       }
+  //     } catch (err) {
+  //       console.error("Error fetching products:", err);
+  //       setError("Could not load products.");
+  //     }
+  //   };
+
+  //   if (user?.token) {
+  //     fetchProducts();
+  //   }
+  // }, [user?.token]);
+
+
+  const fetchProducts = async () => {
+    try {
+      const response = await axios.get("http://127.0.0.1:8000/api/filtered_products?"
+                                          +"page="+page
+                                          +"&category="+(filters.category??'')
+                                          +"&sort="+(filters.sort??'')
+                                          +"&search="+(filters.search??''));
+      
+      console.log(response.data.payload.data);
+      const data = response.data.payload.data;
+
+      if (Array.isArray(data)) {
+        const productsWithImages = data.map((product) => ({
+          ...product,
+          image_url: product.image_url || placeholderImage,
+        }));
+
+        setProducts(productsWithImages);
+        setError(data.length === 0 ? "No matching products found." : null);
+      } else {
+        setProducts([]);
+        setError("No matching products found.");
+      }
+    } catch (err) {
+      console.error("Error fetching filtered products:", err);
+      setError("Could not load filtered products.");
+    }
+  };
 
   //this is initial fetch , no filters here . 
   useEffect(() => {
-    fetchProducts();
+    handleFilter();
   }, [page]);
 
   const handleFilter = () => {
-    const filters = {
+    setFilters({
       search: search.trim(),
       category,
       sort,
-    };
-    fetchProducts(filters);
+    })
+    fetchProducts();
   };
 
   return (
@@ -92,11 +129,19 @@ const Products = () => {
               <option value="Earring">Earrings</option>
             </select>
           </div>
-
-          <button className="filter-btn" onClick={handleFilter}>
-            Filter
-          </button>
         </div>
+        <div className="search-bar-container">
+            <input
+              type="text"
+              placeholder="Search..."
+              className="search-input"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </div>
+        <button className="filter-btn" onClick={handleFilter}>
+            Filter
+        </button>
 
         {error && <div className="error-message">{error}</div>}
 
