@@ -8,6 +8,7 @@ import AddProduct from "../Pages/AddProduct";
 import { UserProvider } from "../components/Context/userContext";
 import ViewProduct from "../Pages/ViewProduct";
 import ProductsListing from "../Pages/AdminDashboard";
+import CelestialCollection from "../Pages/LandingPage";
 
 const MyRoutes = () => {
   return (
@@ -21,6 +22,7 @@ const MyRoutes = () => {
       <Route path="/addproduct" element={<AddProduct/>} />
       <Route path="/viewproduct" element={<ViewProduct/>} />
       <Route path="/admindashboard" element={<ProductsListing/>} />
+      <Route path="/" element={<CelestialCollection/>} />
     </Routes>
     </UserProvider>
 
