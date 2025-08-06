@@ -18,7 +18,6 @@ const NotificationsPage = () => {
 
   useEffect(() => {
     const token = JSON.parse(localStorage.getItem("token"));
-    const userId = JSON.parse(localStorage.getItem("userId"));
 
     axios.get("http://127.0.0.1:8000/api/notifications_user", {
 
@@ -62,6 +61,8 @@ const NotificationsPage = () => {
           status={n.is_read ? "Read" : "Unread"}
         />
       ))}
+
+      {notifications.length == 0 && <div className="no-notifications-div">No Notifications Yet &nbsp; :(</div>}
     </div>
     </div>
   );
