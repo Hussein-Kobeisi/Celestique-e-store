@@ -26,42 +26,6 @@ const Products = () => {
     }
   );
 
-  // useEffect(() => {
-  //   const fetchProducts = async () => {
-  //     try {
-  //       const response = await axios.get('http://localhost:8000/api/products', {
-  //         headers: {
-  //           Authorization: ⁠ Bearer ${user?.token} ⁠,
-  //           Authorization: `Bearer ${user?.token}`,
-  //         },
-  //       });
-
-  //       const data = response.data;
-
-  //       if (Array.isArray(data.payload)) {
-  //         // Map to add fallback image if image_url is null
-  //         const productsWithImages = data.payload.map((product) => ({
-  //           ...product,
-  //           image_url: product.image_url || placeholderImage,
-  //         }));
-
-  //         setProducts(productsWithImages);
-  //         setError(null);
-  //       } else {
-  //         setProducts([]);
-  //         setError("No products found.");
-  //       }
-  //     } catch (err) {
-  //       console.error("Error fetching products:", err);
-  //       setError("Could not load products.");
-  //     }
-  //   };
-
-  //   if (user?.token) {
-  //     fetchProducts();
-  //   }
-  // }, [user?.token]);
-
 
   const fetchProducts = async () => {
     try {

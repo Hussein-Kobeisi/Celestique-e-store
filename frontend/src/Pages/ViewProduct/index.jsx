@@ -43,7 +43,7 @@ const ViewProduct = () => {
 
             <img 
                 className="vp-product-image" 
-                src={product?.image_url || "https://i.pinimg.com/736x/51/4f/1a/514f1a898204387d34e0d67197e9bb09.jpg"} 
+                src={"http://localhost:8000/storage/"+product?.image_url || "https://i.pinimg.com/736x/51/4f/1a/514f1a898204387d34e0d67197e9bb09.jpg"} 
               />
             <div className="vp-product-details">
               

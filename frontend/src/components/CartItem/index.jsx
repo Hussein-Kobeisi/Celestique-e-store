@@ -4,7 +4,7 @@ import "./index.css";
 const CartItem = ({ product, increment, decrement, remove }) => {
   return (
     <div className="cart-item">
-      <img src={product.image} alt={product.name} className="product-img" />
+      <img src={"http://localhost:8000/storage/"+ product.image_url} alt={product.name} className="product-img" />
       <div className="cart-details">
         <h4>{product.name}</h4>
         <strong>${product.price}</strong>

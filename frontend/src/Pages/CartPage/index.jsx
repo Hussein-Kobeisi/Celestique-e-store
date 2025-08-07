@@ -3,18 +3,11 @@ import axios from "axios";
 import "./index.css";
 import image from "../../assets/image 10.png";
 import CartItem from "../../components/CartItem";
+import Navbar from "../../components/Shared/Usernavbar";
 
 const CartPage = () => {
   const token = JSON.parse(localStorage.getItem('token'))
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      name: "Lotus Ring Gold Earrings (18KT)",
-      price: 214,
-      quantity: 0,
-      image: require("../../assets/image 10.png"),
-    },
-  ]);
+  const [cartItems, setCartItems] = useState([]);
 
   const fetchCartProducts = () => {
     const localcartItems = JSON.parse(localStorage.getItem("cart")) || []
@@ -84,6 +77,8 @@ const CartPage = () => {
   }
 
   return (
+    <>
+    <Navbar />
     <div className="cart-page">
       <div className="cart-left">
         <h2>Cart</h2>
@@ -111,6 +106,7 @@ const CartPage = () => {
         <img src={image} alt="Jewelry" className="right-image" />
       </div>
     </div>
+    </>
   );
 };
 

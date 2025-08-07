@@ -3,7 +3,7 @@
     padding: 20px 40px;
     background-color: #fff;
     font-family: 'Segoe UI', sans-serif;
-    height:90dvh;
+    min-height:90dvh;
   }
   
 

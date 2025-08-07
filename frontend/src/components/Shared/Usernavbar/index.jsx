@@ -24,16 +24,14 @@ const Navbar = ({ activeLink }) => {
 
         <nav className="celestique-nav"> 
         <Link className="celestique-nav-link" to="/products">
-  Products
-</Link>
-          <a 
-            href="#" 
-            className={`celestique-nav-link ${
-              activeLink === 'Cart' ? 'active' : ''
-            }`}
-          >
-            Cart
-          </a>
+          Products
+        </Link>
+        <Link className="celestique-nav-link" to="/cart">
+          Cart
+        </Link>
+        <Link className="celestique-nav-link" to="/ai">
+          Ai Assistant
+        </Link>
         </nav>
 
         <div className="celestique-user-actions">
