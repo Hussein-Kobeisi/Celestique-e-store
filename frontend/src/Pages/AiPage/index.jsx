@@ -5,11 +5,12 @@ import ProductCard from "../../components/ProductCard";
 import { getProductsApi } from "../../apis/apis";
 import Navbar from "../../components/Shared/Usernavbar";
 import { useUser} from "../../components/Context/userContext";
-import { Navigate} from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 
 const placeholderImage = "https://via.placeholder.com/150";
 
 const Products = () => {
+  const navigate = useNavigate()
   const { user } = useUser();
   const [products, setProducts] = useState([]);
   const [search, setSearch] = useState("");
@@ -24,67 +25,6 @@ const Products = () => {
       sort:"",
     }
   );
-  // useEffect(() => {
-  //   const fetchProducts = async () => {
-  //     try {
-  //       const response = await axios.get('http://localhost:8000/api/products', {
-  //         headers: {
-  //           Authorization: ⁠ Bearer ${user?.token} ⁠,
-  //         },
-  //       });
-
-  //       const data = response.data;
-
-  //       if (Array.isArray(data.payload)) {
-  //         // Map to add fallback image if image_url is null
-  //         const productsWithImages = data.payload.map((product) => ({
-  //           ...product,
-  //           image_url: product.image_url || placeholderImage,
-  //         }));
-
-  //         setProducts(productsWithImages);
-  //         setError(null);
-  //       } else {
-  //         setProducts([]);
-  //         setError("No products found.");
-  //       }
-  //     } catch (err) {
-  //       console.error("Error fetching products:", err);
-  //       setError("Could not load products.");
-  //     }
-  //   };
-
-  //   if (user?.token) {
-  //     fetchProducts();
-  //   }
-  // }, [user?.token]);
-
-
-  // const fetchProducts = async () => {
-  //   try {
-  //     const response = await axios.get("http://localhost:8000/api/products")
-      
-  //     console.log(response.data.payload.data);
-  //     const data = response.data.payload.data;
-
-  //     if (Array.isArray(data)) {
-  //       const productsWithImages = data.map((product) => ({
-  //         ...product,
-  //         image_url: product.image_url || placeholderImage,
-  //       }));
-
-  //       setProducts(productsWithImages);
-  //       setError(data.length === 0 ? "No matching products found." : null);
-  //     } else {
-  //       setProducts([]);
-  //       setError("No matching products found.");
-  //     }
-  //   } catch (err) {
-  //     console.error("Error fetching filtered products:", err);
-  //     setError("Could not load filtered products.");
-  //   }
-  // };
-
   //this is initial fetch , no filters here . 
   useEffect(() => {
     handleFilter();
@@ -158,7 +98,7 @@ const Products = () => {
         <div className="product-grid">
           {products.length > 0 ? (
             products.map((product) => (
-              <ProductCard key={product.id} product={product} />
+              <ProductCard key={product.id} product={product} onClick={() => navigate('/viewproduct?productId='+product.id)} />
             ))
           ) : (
             !error && <div className="no-products">No products available.</div>
